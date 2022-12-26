@@ -6,10 +6,11 @@ const Navigation = () => {
 
   console.log(openProfile);
   return (
-    <nav className="mx-10 h-[10vh] bg-white flex justify-between items-center">
+    <nav className="mx-10 py-2 bg-white flex justify-between items-center">
       <div className="w-[300px]">
         <Link to="/">
-          <img src="" alt="LogoHtml" />
+          {/* <img src="" alt="WeShare!" /> */}
+          <p className="text-4xl font-bold">WeShare!</p>
         </Link>
       </div>
       <div className="w-[600px]">
@@ -34,7 +35,7 @@ const Navigation = () => {
               type="search"
               name="Search"
               placeholder="Search..."
-              className="w-full p-4 pl-16 rounded-2xl focus:outline-none bg-gray-100 text-gray-900 "
+              className="w-full p-4 pl-16 rounded-2xl focus:outline-none bg-gray-100 text-gray-900 text-lg "
             />
           </div>
         </fieldset>
