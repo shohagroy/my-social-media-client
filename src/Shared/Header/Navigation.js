@@ -1,12 +1,15 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
+import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
+import demoProfile from "../../Assets/demo user.png";
 
 const Navigation = () => {
+  const { user, logOut } = useContext(AuthContex);
+
   const [openProfile, setOpenProfile] = useState(false);
 
-  console.log(openProfile);
   return (
-    <nav className="mx-10 py-2 bg-white flex justify-between items-center">
+    <nav className="px-10 py-2 bg-blue-200 flex justify-between items-center">
       <div className="w-[300px]">
         <Link to="/">
           {/* <img src="" alt="WeShare!" /> */}
@@ -53,26 +56,54 @@ const Navigation = () => {
               <i className="fa-solid fa-bell"></i>
             </Link>
           </div>
-          <button onClick={() => setOpenProfile(!openProfile)}>
-            <img
-              alt=""
-              className="w-12 h-12 rounded-full ring-2 ring-offset-4 dark:bg-gray-500 ring-violet-400 ring-offset-gray-800"
-              src="https://source.unsplash.com/40x40/?portrait?2"
-            />
+          <button
+            className="text-md"
+            onClick={() => setOpenProfile(!openProfile)}
+          >
+            {user.photoURL ? (
+              <img
+                alt={user.displayName}
+                className="w-12 h-12 rounded-full ring-2 ring-offset-4 dark:bg-gray-500 ring-violet-400 ring-offset-gray-800"
+                src={user.photoURL}
+              />
+            ) : (
+              <img
+                alt={user.displayName}
+                className="w-12 h-12 rounded-full ring-2 ring-offset-4 dark:bg-gray-500 ring-violet-400 ring-offset-gray-800"
+                src={demoProfile}
+              />
+            )}
           </button>
 
           {openProfile && (
             <div className="w-[350px] absolute right-0 top-[100%]  bg-white p-3 rounded-xl shadow-2xl">
-              <div className="py-5 hover:bg-gray-100 duration-300 rounded-lg bg-white flex shadow-lg justify-center items-center">
-                <img
-                  alt=""
-                  className="w-10 h-10 rounded-full ring-2 ring-offset-4 dark:bg-gray-500 ring-violet-400 ring-offset-gray-800"
-                  src="https://source.unsplash.com/40x40/?portrait?2"
-                />
+              <div
+                onClick={() => setOpenProfile(!openProfile)}
+                className="py-5 hover:bg-gray-100 duration-300 rounded-lg bg-white flex shadow-lg justify-center items-center"
+              >
+                <Link>
+                  {user.photoURL ? (
+                    <img
+                      alt=""
+                      className="w-10 h-10 rounded-full ring-2 ring-offset-4 dark:bg-gray-500 ring-violet-400 ring-offset-gray-800"
+                      src={user.photoURL}
+                    />
+                  ) : (
+                    <img
+                      alt={user.displayName}
+                      className="w-10 h-10 hidden rounded-full ring-2 ring-offset-4 dark:bg-gray-500 ring-violet-400 ring-offset-gray-800"
+                      src={demoProfile}
+                    />
+                  )}
+                </Link>
+
                 <p className="text-2xl ml-5 font-semibold">Shohag Roy</p>
               </div>
 
-              <div className="my-5 text-xl">
+              <div
+                onClick={() => setOpenProfile(!openProfile)}
+                className="my-5 text-xl"
+              >
                 <div className="p-3 hover:bg-gray-100 duration-300 rounded-lg bg-  flex items-center">
                   <Link className="flex justify-between items-center w-full">
                     <p className="">
@@ -95,7 +126,10 @@ const Navigation = () => {
                     </svg>
                   </Link>
                 </div>
-                <div className="p-3 hover:bg-gray-100 duration-300 rounded-lg bg-  flex items-center">
+                <div
+                  onClick={() => setOpenProfile(!openProfile)}
+                  className="p-3 hover:bg-gray-100 duration-300 rounded-lg bg-  flex items-center"
+                >
                   <Link className="flex justify-between items-center w-full">
                     <p className="">
                       <i className="fa-solid p-2 rounded-full bg-gray-200 mr-2 fa-gear"></i>
@@ -118,7 +152,7 @@ const Navigation = () => {
                   </Link>
                 </div>
                 <div className="p-3 hover:bg-gray-100 duration-300 rounded-lg bg-  flex items-center">
-                  <button className="">
+                  <button onClick={() => logOut()} className="">
                     <p className="">
                       <i className="fa-solid p-2 rounded-full bg-gray-200 mr-2 fa-right-from-bracket"></i>
                       <span>Log Out</span>

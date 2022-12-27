@@ -25,8 +25,18 @@ const GobalAuthProvaider = ({ children }) => {
   };
 
   // update user profile
-  const updateUser = (name) => {
-    return updateProfile(auth.currentUser, { displayName: name });
+  const updateUser = (photoUrl, name) => {
+    if (photoUrl) {
+      return updateProfile(auth.currentUser, {
+        photoURL: photoUrl,
+      });
+    }
+
+    if (name) {
+      return updateProfile(auth.currentUser, {
+        displayName: name,
+      });
+    }
   };
 
   // user log Out function
@@ -65,9 +75,6 @@ const GobalAuthProvaider = ({ children }) => {
     return () => unSubscribe();
   }, [user]);
 
-  // category wise show product
-  const [categoryName, setCategoryName] = useState("");
-
   const authInfo = {
     setAddCart,
     addCart,
@@ -78,8 +85,6 @@ const GobalAuthProvaider = ({ children }) => {
     updateUser,
     login,
     googleSignIn,
-    setCategoryName,
-    categoryName,
   };
   return <AuthContex.Provider value={authInfo}>{children}</AuthContex.Provider>;
 };
