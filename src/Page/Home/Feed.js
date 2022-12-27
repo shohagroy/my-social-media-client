@@ -1,5 +1,6 @@
 import React from "react";
 import CreateNewFeed from "../../Components/CreateNewFeed/CreateNewFeed";
+import FeedsCard from "../../Shared/FeedsCard/FeedsCard";
 
 const Feed = () => {
   return (
@@ -8,6 +9,10 @@ const Feed = () => {
         <div>
           <CreateNewFeed />
         </div>
+        <FeedsCard />
+        <FeedsCard />
+        <FeedsCard />
+        <FeedsCard />
       </div>
     </section>
   );

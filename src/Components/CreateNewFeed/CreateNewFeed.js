@@ -12,8 +12,6 @@ const CreateNewFeed = () => {
 
   const imgbbHostKey = process.env.REACT_APP_imgbb_host_key;
 
-  console.log(imgbbHostKey);
-
   const createNewFeedHandelar = (e) => {
     e.preventDefault();
     setLoading(true);

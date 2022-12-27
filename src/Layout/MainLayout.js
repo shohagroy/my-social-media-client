@@ -7,15 +7,17 @@ import RightSide from "../Shared/RightSide/RightSide";
 const MainLayout = () => {
   return (
     <div>
-      <Navigation />
-      <div className="flex justify-between">
-        <div className="lg:w-[400px] ">
+      <div className="fixed top-0 z-50 w-full">
+        <Navigation />
+      </div>
+      <div className="flex mt-[8vh] justify-between">
+        <div className="lg:w-[400px] fixed left-0 ">
           <Leftside />
         </div>
-        <div className="lg:w-[700px]">
+        <div className="lg:w-[700px] mx-auto">
           <Outlet />
         </div>
-        <div className="lg:w-[400px] text-right">
+        <div className="lg:w-[400px] fixed right-0 text-right">
           <RightSide />
         </div>
       </div>
