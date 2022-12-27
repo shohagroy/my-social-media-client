@@ -27,20 +27,13 @@ const Login = () => {
       .then((result) => {
         const user = result.user;
 
-        const userEmail = { email: user.email };
-
-        if (userEmail) {
-          fetch(`http://localhost:5000/jwtCrateLoginUser`, {
-            method: "POST",
-            headers: {
-              "content-type": "application/json",
-            },
-            body: JSON.stringify(userEmail),
-          })
+        if (user.email) {
+          fetch(`http://localhost:5000/jwtCrateLoginUser?email=${user.email}`)
             .then((res) => res.json())
             .then((data) => {
+              console.log(data);
               if (data.jwtToken) {
-                localStorage.setItem("mobile-mart", data.jwtToken);
+                localStorage.setItem("weShare", data.jwtToken);
                 setLoading(false);
                 navigate(path, { relative: true });
               }

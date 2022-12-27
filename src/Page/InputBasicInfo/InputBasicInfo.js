@@ -10,11 +10,11 @@ const InputBasicInfo = () => {
   const imgbbHostKey = process.env.REACT_APP_imgbb_host_key;
   const [loading, setLoading] = useState(false);
   const navigation = useNavigate();
+  const date = new Date().toLocaleString();
 
   const profilePictureUpdateHandelar = (e) => {
     setLoading(true);
     e.preventDefault();
-    const date = new Date().toLocaleString();
 
     const imageData = e.target.image.files;
 
@@ -30,9 +30,7 @@ const InputBasicInfo = () => {
     })
       .then((res) => res.json())
       .then((imgData) => {
-        console.log(imgData);
         if (imgData.success) {
-          console.log(imgData);
           updateUser(imgData.data.url)
             .then(() => {
               const newPost = {
@@ -66,7 +64,6 @@ const InputBasicInfo = () => {
                   res.json();
                 })
                 .then((data) => {
-                  console.log(data);
                   navigation("/");
                 });
 

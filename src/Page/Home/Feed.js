@@ -3,8 +3,8 @@ import CreateNewFeed from "../../Components/CreateNewFeed/CreateNewFeed";
 
 const Feed = () => {
   return (
-    <section>
-      <div className="bg-red-400 ">
+    <section className="mx-2">
+      <div>
         <div>
           <CreateNewFeed />
         </div>
