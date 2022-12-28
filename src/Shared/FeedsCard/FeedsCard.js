@@ -1,30 +1,59 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
+import { useQuery } from "react-query";
 import { Link } from "react-router-dom";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
+import LikeCommentFunction from "./LikeCommentFunction";
+import InputEmoji from "react-input-emoji";
 
-const FeedsCard = () => {
+const FeedsCard = ({ post, postId }) => {
   const { user } = useContext(AuthContex);
-  const date = new Date().toLocaleString();
+  const toDay = new Date().toLocaleString();
+  const [reactCount, setReactCount] = useState(0);
+  const [postAuthor, setPostAuthor] = useState({});
+  const [newComment, setNewComment] = useState("");
 
-  const newPost = {
-    user: user.email,
-    isProfilePicture: false,
-    text: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Minima numquam quidem quis assumenda eaque? Quis veniam tenetur enim doloremque autem saepe ut consectetur iusto laboriosam earum itaque velit, voluptas eligendi corporis? Fuga, facilis? Nulla, blanditiis magni. Alias dolorum obcaecati minima, modi voluptate, dolor asperiores a cum eligendi magni corporis amet.",
-    image:
-      "https://digitalhub.fifa.com/transform/27b0b0fe-3786-4407-9b93-cb71295d1497/Netherlands-v-Argentina-Quarter-Final-FIFA-World-Cup-Qatar-2022",
-    date: 'date: "12/27/2022, 11:54:46 PM',
-    react: [
-      { like: 0, user: [] },
-      { love: 0, user: [] },
-      { haha: 0, user: [] },
-    ],
-    totalReact: 0,
-    allComment: [{ comment: "", userEmail: "", date: "" }],
+  console.log(newComment);
+  useEffect(() => {
+    fetch(
+      `http://localhost:5000/findUser?email=${user.email}&userEmail=${post.user}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("weShare")}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => setPostAuthor(data));
+  }, []);
+
+  let postTime;
+  const currentMilisecend = new Date(toDay).setMilliseconds(52);
+  const postDateMilisecend = new Date(post.date).setMilliseconds(52);
+  // const postMilisecend = currentMilisecend - postDateMilisecend;
+  const postMinute = parseInt(
+    (currentMilisecend - postDateMilisecend) / 1000 / 60
+  );
+
+  if (postMinute < 1) {
+    postTime = " just now!";
+  }
+
+  if (postMinute > 1 && postMinute < 60) {
+    postTime = `${postMinute} minute ago.`;
+  }
+
+  if (postMinute > 60 && postMinute < 60 * 60) {
+    postTime = `${parseInt(postMinute / 60)} hour ago`;
+  }
+
+  if (postMinute > 60 * 60 && postMinute < 60 * 60 * 24) {
+    postTime = `${parseInt(postMinute / 60 / 24)} day ago.`;
+  }
+
+  const addCommentHandelar = () => {
+    console.log("button click");
   };
 
-  console.log(newPost.allComment.length);
-
-  //   console.log(newPost);
   return (
     <section className="my-4">
       <div className="rounded-md shadow-md  bg-white border text-gray-800">
@@ -33,18 +62,19 @@ const FeedsCard = () => {
             <Link>
               <img
                 alt=""
-                src={user.photoURL}
+                src={postAuthor.photoUrl}
                 className="w-12 m-2 h-12 rounded-full ring-2 bg-white ring-blue-400 "
               />
             </Link>
-            <div className="-space-y-1">
+            <div className="-space-y-1 m-1">
               <Link>
-                <h2 className="font-semibold leading-none">
-                  {user.displayName}
+                <h2 className="font-semibold text-xl leading-none">
+                  {postAuthor.name}
                 </h2>
               </Link>
-              <span className="inline-block text-xs leading-none text-gray-400">
-                Somewhere
+              <span className="inline-block  leading-none text-gray-400">
+                <i title="Public" className="fa-solid fa-earth-americas"></i>{" "}
+                <span>{postTime}</span>
               </span>
             </div>
           </div>
@@ -62,82 +92,68 @@ const FeedsCard = () => {
         </div>
 
         <div className="px-4 pb-2 text-xl">
-          <p>
-            {newPost.text.slice(0, 200)} ...{" "}
-            <Link className="text-blue-600">Read More</Link>
-          </p>
+          {post.text && (
+            <p>
+              {post.text.slice(0, 200)}{" "}
+              {post.text.length > 200 && (
+                <Link className="text-blue-600"> ... Read More</Link>
+              )}
+            </p>
+          )}
         </div>
-        <img
-          src={newPost.image}
-          alt=""
-          className="object-cover object-center w-full  bg-gray-500"
-        />
+
+        {post.image && (
+          <img
+            src={post.image}
+            alt=""
+            className="object-cover object-center md:object-contain  w-full bg-gradient-to-r from-blue-200 via-red-500 to-blue-200 md:max-h-[600px]  bg-gray-500"
+          />
+        )}
         <div className="flex justify-between items-center p-3">
           <div className="flex items-center">
-            <div className="mr-2">
-              <p>link </p>
-            </div>
             <div className="flex flex-wrap items-center pt-3 pb-1">
               <div className="flex items-center space-x-2">
                 <div className="flex -space-x-1">
-                  <img
-                    alt=""
-                    className="w-5 h-5 border rounded-full bg-gray-500 border-gray-800"
-                    src="https://source.unsplash.com/40x40/?portrait?1"
-                  />
-                  <img
-                    alt=""
-                    className="w-5 h-5 border rounded-full bg-gray-500 border-gray-800"
-                    src="https://source.unsplash.com/40x40/?portrait?2"
-                  />
-                  <img
-                    alt=""
-                    className="w-5 h-5 border rounded-full bg-gray-500 border-gray-800"
-                    src="https://source.unsplash.com/40x40/?portrait?3"
-                  />
+                  {post.react.slice(0, 3).map((react) => (
+                    <img
+                      key={react._id}
+                      alt=""
+                      className="w-5 h-5 border rounded-full bg-gray-500 border-gray-800"
+                      src={react.emoji}
+                    />
+                  ))}
                 </div>
-                <span className="text-sm">
-                  Liked by
-                  <span className="font-semibold">Mamba UI</span>and
-                  <span className="font-semibold">86 others</span>
-                </span>
+
+                <div>
+                  <p className={`${reactCount == 0 ? "hidden" : "block"}`}>
+                    {reactCount}
+                  </p>
+                </div>
               </div>
             </div>
           </div>
           <div>
-            {newPost.allComment.length &&
-              `${newPost.allComment.length} 'Comments`}
+            {post.allComment.length && `${post.allComment.length} 'Comments`}
           </div>
         </div>
         <hr />
-        <div className="flex justify-center items-center w-full">
-          <div className="w-[50%] p-1 ">
-            <button className="py-2 rounded-md hover:bg-gray-200 w-full duration-300 font-semibold">
-              {" "}
-              <span>
-                <i className="mr-2 fa-solid fa-thumbs-up"></i>
-              </span>
-              Like
-            </button>
-          </div>
-          <div className="w-[50%] p-1 ">
-            <button className="py-2 rounded-md hover:bg-gray-200 w-full duration-300 font-semibold">
-              {" "}
-              <span>
-                <i className="mr-2 fa-solid fa-message"></i>
-              </span>
-              Comment
-            </button>
-          </div>
-        </div>
+        <LikeCommentFunction
+          setReactCount={setReactCount}
+          postId={postId}
+          reacts={post.react}
+        />
         <hr />
         <div className="p-3">
           <div className="space-y-3">
-            <input
-              type="text"
-              placeholder="Add a comment..."
-              className="w-full  p-2 bg-transparent border-none rounded border text-gray-700"
-            />
+            <div className=" w-full">
+              <InputEmoji
+                value={newComment}
+                cleanOnEnter
+                onChange={setNewComment}
+                onEnter={addCommentHandelar}
+                placeholder="What's Happening?"
+              />
+            </div>
           </div>
         </div>
       </div>

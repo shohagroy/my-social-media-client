@@ -9,6 +9,7 @@ const CreateNewFeed = () => {
   const [postToggle, setPostToggle] = useState(false);
   const [loading, setLoading] = useState(false);
   const date = new Date().toLocaleString();
+  const [imageLink, setImageLink] = useState("");
 
   const imgbbHostKey = process.env.REACT_APP_imgbb_host_key;
 
@@ -16,15 +17,63 @@ const CreateNewFeed = () => {
     e.preventDefault();
     setLoading(true);
     setPostToggle(false);
-    const postImage = e.target.imageFile.files;
+    const postImage = e.target.imageFile?.files;
+    const url = `https://api.imgbb.com/1/upload?key=${imgbbHostKey}`;
 
-    console.log(postImage);
+    if (!postImage) {
+      const newPost = {
+        user: user.email,
+        isProfilePicture: false,
+        text: emoji,
+        image: "",
+        date,
+        react: [
+          {
+            _id: 0,
+            name: "like",
+            emoji: "https://i.ibb.co/7J4wZXV/like.gif",
+            user: [],
+          },
+          {
+            _id: 1,
+            name: "love",
+            emoji: "https://i.ibb.co/KxcYzBQ/love.gif",
+            user: [],
+          },
+          {
+            _id: 2,
+            name: "haha",
+            emoji: "https://i.ibb.co/hYW2t8F/haha.gif",
+            user: [],
+          },
+          {
+            _id: 3,
+            name: "sad",
+            emoji: "https://i.ibb.co/8rw0Y4x/sad.gif",
+            user: [],
+          },
+        ],
+        totalReact: 0,
+        allComment: [{ comment: "", userEmail: "", date }],
+      };
+      fetch(`http://localhost:5000/createNewPost?userEmail=${user?.email}`, {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("weShare")}`,
+        },
+        body: JSON.stringify(newPost),
+      })
+        .then((res) => res.json())
+        .then((data) => {
+          setLoading(false);
+        });
+    }
+
     if (postImage) {
       const fromData = new FormData();
       const picture = postImage[0];
       fromData.append("image", picture);
-
-      const url = `https://api.imgbb.com/1/upload?key=${imgbbHostKey}`;
 
       fetch(url, {
         method: "POST",
@@ -32,7 +81,6 @@ const CreateNewFeed = () => {
       })
         .then((res) => res.json())
         .then((imgData) => {
-          console.log(imgData);
           if (imgData.success) {
             const newPost = {
               user: user.email,
@@ -41,9 +89,30 @@ const CreateNewFeed = () => {
               image: imgData.data.url,
               date,
               react: [
-                { like: 0, user: [] },
-                { love: 0, user: [] },
-                { haha: 0, user: [] },
+                {
+                  _id: 1,
+                  name: "like",
+                  emoji: "https://i.ibb.co/7J4wZXV/like.gif",
+                  user: [],
+                },
+                {
+                  _id: 2,
+                  name: "love",
+                  emoji: "https://i.ibb.co/KxcYzBQ/love.gif",
+                  user: [],
+                },
+                {
+                  _id: 3,
+                  name: "haha",
+                  emoji: "https://i.ibb.co/hYW2t8F/haha.gif",
+                  user: [],
+                },
+                {
+                  _id: 4,
+                  name: "sad",
+                  emoji: "https://i.ibb.co/8rw0Y4x/sad.gif",
+                  user: [],
+                },
               ],
               totalReact: 0,
               allComment: [{ comment: "", userEmail: "", date }],
@@ -62,9 +131,12 @@ const CreateNewFeed = () => {
             )
               .then((res) => res.json())
               .then((data) => {
-                console.log(data.insertedId);
                 setLoading(false);
               });
+          }
+
+          if (!postImage) {
+            console.log("only text");
           }
         });
     }
@@ -79,13 +151,14 @@ const CreateNewFeed = () => {
         >
           <div className="flex justify-center items-center">
             <img
-              alt={user.displayName}
-              className="w-10 h-10 rounded-full ring ring-offset-2 dark:bg-gray-500 ring-gray-700 ring-offset-gray-600"
+              alt=""
               src={user.photoURL}
+              className="w-12 m-2 h-12 rounded-full ring-2 bg-white ring-blue-400 "
             />
             <div className=" w-full">
               <InputEmoji
                 value={emoji}
+                cleanOnEnter
                 onChange={setEmoji}
                 placeholder="What's Happening?"
               />
@@ -103,6 +176,7 @@ const CreateNewFeed = () => {
             <input
               type={emoji ? "submit" : "button"}
               value="Post"
+              name="text"
               className={`px-6 py-2 cursor-pointer font-semibold duration-300 text-gray-300 border-2 rounded-lg hover:bg-blue-600 
               ${emoji ? "bg-blue-600" : "bg-blue-300"} `}
             />
@@ -157,7 +231,3 @@ const CreateNewFeed = () => {
 };
 
 export default CreateNewFeed;
-
-// <p>
-//             <i className="fa-solid fa-earth-americas"></i>
-//           </p>

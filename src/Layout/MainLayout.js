@@ -10,14 +10,14 @@ const MainLayout = () => {
       <div className="fixed top-0 z-50 w-full">
         <Navigation />
       </div>
-      <div className="flex mt-[8vh] justify-between">
-        <div className="lg:w-[400px] fixed left-0 ">
+      <div className=" mt-[8vh] md:flex justify-between">
+        <div className="lg:w-[400px] hidden md:fixed left-0 ">
           <Leftside />
         </div>
         <div className="lg:w-[700px] mx-auto">
           <Outlet />
         </div>
-        <div className="lg:w-[400px] fixed right-0 text-right">
+        <div className="lg:w-[400px] hidden md:fixed right-0 text-right">
           <RightSide />
         </div>
       </div>
