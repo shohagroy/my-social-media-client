@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 
-const UpdateSchool = () => {
+const UpdateCollege = () => {
   const { user } = useContext(AuthContex);
   const [viewProfile, setViewProfile] = useState({});
   const [openModal, setOpenModal] = useState(false);
@@ -25,22 +25,22 @@ const UpdateSchool = () => {
 
   console.log(loading, viewProfile);
 
-  const updateSchoolNameHandelar = (e) => {
+  const updateCollegeNameHandelar = (e) => {
     e.preventDefault();
     setModalLoading(true);
 
-    const schoolName = e.target.schoolName.value;
+    const collegeName = e.target.collegeName.value;
     const address = e.target.address.value;
 
-    const updateSchool = { name: schoolName, address };
+    const updateCollege = { name: collegeName, address };
 
-    fetch(`http://localhost:5000/findUserSchool?email=${user.email}`, {
+    fetch(`http://localhost:5000/findUserCollege?email=${user.email}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${localStorage.getItem("weShare")}`,
       },
-      body: JSON.stringify(updateSchool),
+      body: JSON.stringify(updateCollege),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -61,13 +61,12 @@ const UpdateSchool = () => {
       </div>
     );
   }
-  // console.log(viewProfile.school.name);
 
   return (
     <div className="my-4">
       <div className="flex justify-between items-center">
         <p className="text-xl font-semibold">
-          <i className="fa-solid my-3 fa-building-columns"></i> Your School
+          <i className="fa-solid fa-graduation-cap my-3"></i> Your college
         </p>
         <button
           onClick={() => setOpenModal(!openModal)}
@@ -75,7 +74,7 @@ const UpdateSchool = () => {
         >
           {" "}
           <i className="fa-sharp border border-blue-500 rounded-full p-1  mr-2 fa-solid fa-plus"></i>
-          <span>Add High School</span>
+          <span>Add College </span>
         </button>
       </div>
       <div className="text-xl font-semibold text-gray-500">
@@ -91,12 +90,12 @@ const UpdateSchool = () => {
         ) : (
           <div>
             <p>
-              School Name:{" "}
-              <span className="font-bold">{viewProfile?.school?.name}</span>
+              College Name:{" "}
+              <span className="font-bold">{viewProfile?.college?.name}</span>
             </p>
             <p>
-              Achool Address:{" "}
-              <span className="font-bold">{viewProfile?.school?.address}</span>
+              Address:{" "}
+              <span className="font-bold">{viewProfile?.college?.address}</span>
             </p>
           </div>
         )}
@@ -111,7 +110,7 @@ const UpdateSchool = () => {
         <div className="absolute flex justify-center items-center top-0 bg-white/80 h-full left-0 w-full">
           <div className="flex justify-center items-center">
             <form
-              onSubmit={(e) => updateSchoolNameHandelar(e)}
+              onSubmit={(e) => updateCollegeNameHandelar(e)}
               action=""
               className="border p-8 bg-white rounded-xl shadow-lg text-center w-full "
             >
@@ -126,12 +125,12 @@ const UpdateSchool = () => {
                     </p>
                   </div>
                   <p className=" font-semibold text-2xl my-3">
-                    Your High School Name
+                    Your College Name
                   </p>
                   <input
                     type="text"
-                    placeholder="School Name"
-                    name="schoolName"
+                    placeholder="College Name"
+                    name="collegeName"
                     required
                     className="border p-3 w-full rounded-md"
                   />
@@ -143,7 +142,7 @@ const UpdateSchool = () => {
                     className="border p-3 w-full my-3 rounded-md"
                   />
                   <button className="w-full py-3 rounded-md font-semibold hover:text-white bg-blue-200 hover:bg-blue-500">
-                    Add High School
+                    Add College
                   </button>
                 </div>
               ) : (
@@ -164,4 +163,4 @@ const UpdateSchool = () => {
   );
 };
 
-export default UpdateSchool;
+export default UpdateCollege;
