@@ -66,7 +66,7 @@ const InputBasicInfo = () => {
                   },
                 ],
                 totalReact: 0,
-                allComment: [{ comment: "", userEmail: "", date }],
+                totalComments: 0,
               };
 
               fetch(

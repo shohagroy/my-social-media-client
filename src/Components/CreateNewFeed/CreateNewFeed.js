@@ -54,7 +54,7 @@ const CreateNewFeed = () => {
           },
         ],
         totalReact: 0,
-        allComment: [{ comment: "", userEmail: "", date }],
+        totalComments: 0,
       };
       fetch(`http://localhost:5000/createNewPost?userEmail=${user?.email}`, {
         method: "POST",
@@ -115,7 +115,7 @@ const CreateNewFeed = () => {
                 },
               ],
               totalReact: 0,
-              allComment: [{ comment: "", userEmail: "", date }],
+              totalComments: 0,
             };
 
             fetch(

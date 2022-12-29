@@ -4,15 +4,17 @@ import { Link } from "react-router-dom";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 import LikeCommentFunction from "./LikeCommentFunction";
 import InputEmoji from "react-input-emoji";
+import DisplayComments from "../../Components/DisplayComments/DisplayComments";
 
-const FeedsCard = ({ post, postId }) => {
+const FeedsCard = ({ post, postId, comments }) => {
   const { user } = useContext(AuthContex);
   const toDay = new Date().toLocaleString();
   const [reactCount, setReactCount] = useState(0);
   const [postAuthor, setPostAuthor] = useState({});
   const [newComment, setNewComment] = useState("");
+  const [postComments, setPostComments] = useState([]);
+  const [loading, setLoading] = useState(false);
 
-  console.log(newComment);
   useEffect(() => {
     fetch(
       `http://localhost:5000/findUser?email=${user.email}&userEmail=${post.user}`,
@@ -38,7 +40,7 @@ const FeedsCard = ({ post, postId }) => {
     postTime = " just now!";
   }
 
-  if (postMinute > 1 && postMinute < 60) {
+  if (postMinute > 0 && postMinute < 60) {
     postTime = `${postMinute} minute ago.`;
   }
 
@@ -51,7 +53,31 @@ const FeedsCard = ({ post, postId }) => {
   }
 
   const addCommentHandelar = () => {
-    console.log("button click");
+    setLoading(true);
+
+    const comment = {
+      postId,
+      user: user.displayName,
+      email: user.email,
+      comment: newComment,
+      commentDate: toDay,
+    };
+
+    fetch(
+      `http://localhost:5000/addNewComment?email=${user.email}&id=${postId}`,
+      {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("weShare")}`,
+        },
+        body: JSON.stringify(comment),
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setLoading(false);
+      });
   };
 
   return (
@@ -133,7 +159,9 @@ const FeedsCard = ({ post, postId }) => {
             </div>
           </div>
           <div>
-            {post.allComment.length && `${post.allComment.length} 'Comments`}
+            <p className={`${post.totalComments == 0 ? "hidden" : "block"}`}>
+              {post.totalComments} Comments
+            </p>
           </div>
         </div>
         <hr />
@@ -151,9 +179,28 @@ const FeedsCard = ({ post, postId }) => {
                 cleanOnEnter
                 onChange={setNewComment}
                 onEnter={addCommentHandelar}
-                placeholder="What's Happening?"
+                placeholder="Write a Comment!"
               />
             </div>
+            {loading && (
+              <div className=" rounded shadow-md w-full animate-pulse bg-gray-">
+                <div className="flex p-4 space-x-4 sm:px-8">
+                  <div className="flex-shrink-0 w-14 h-14 rounded-full bg-gray-400"></div>
+                  <div className="flex-1 py-2 space-y-4">
+                    <div className="w-full h-3 rounded bg-gray-400"></div>
+                    <div className="w-5/6 h-3 rounded bg-gray-400"></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            {comments.map((comment) => (
+              <DisplayComments
+                postId={postId}
+                comment={comment}
+                comments={comments}
+                key={comment._id}
+              />
+            ))}
           </div>
         </div>
       </div>

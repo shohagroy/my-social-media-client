@@ -3,6 +3,7 @@ import CreateNewFeed from "../../Components/CreateNewFeed/CreateNewFeed";
 import FeedsCard from "../../Shared/FeedsCard/FeedsCard";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
+import Skeleton from "../../Shared/Loaders/Skeleton";
 
 const Feed = () => {
   // const [feedData, setFeedData] = useState([]);
@@ -28,8 +29,17 @@ const Feed = () => {
   });
 
   if (isLoading) {
-    console.log("Loading...");
+    return (
+      <>
+        <Skeleton />
+        <Skeleton />
+        <Skeleton />
+      </>
+    );
   }
+
+  const { feeds, comments } = feedsData;
+  console.log(feedsData);
 
   return (
     <section className="mx-2">
@@ -37,8 +47,13 @@ const Feed = () => {
         <div>
           <CreateNewFeed />
         </div>
-        {feedsData.map((data) => (
-          <FeedsCard key={data._id} postId={data._id} post={data} />
+        {feeds.map((data) => (
+          <FeedsCard
+            key={data._id}
+            comments={comments}
+            postId={data._id}
+            post={data}
+          />
         ))}
       </div>
     </section>
