@@ -8,6 +8,7 @@ const DisplayProfilePicture = () => {
   const [profileModal, setProfileModal] = useState(false);
   const [coverPhotoFetching, setCoverPhotoFatching] = useState(false);
   const [loading, setLoading] = useState(false);
+  const date = new Date().toLocaleString();
 
   const imgbbHostKey = process.env.REACT_APP_imgbb_host_key;
 
@@ -89,7 +90,41 @@ const DisplayProfilePicture = () => {
         if (imgData.success) {
           updateProfilePicture(imgData.data.url)
             .then(() => {
-              const profilePictureUrl = { url: imgData.data.url };
+              const newPost = {
+                user: user.email,
+                isProfilePicture: true,
+                text: "",
+                image: imgData.data.url,
+                date,
+                react: [
+                  {
+                    _id: 1,
+                    name: "like",
+                    emoji: "https://i.ibb.co/7J4wZXV/like.gif",
+                    user: [],
+                  },
+                  {
+                    _id: 2,
+                    name: "love",
+                    emoji: "https://i.ibb.co/KxcYzBQ/love.gif",
+                    user: [],
+                  },
+                  {
+                    _id: 3,
+                    name: "haha",
+                    emoji: "https://i.ibb.co/hYW2t8F/haha.gif",
+                    user: [],
+                  },
+                  {
+                    _id: 4,
+                    name: "sad",
+                    emoji: "https://i.ibb.co/8rw0Y4x/sad.gif",
+                    user: [],
+                  },
+                ],
+                totalReact: 0,
+                totalComments: 0,
+              };
               fetch(
                 `http://localhost:5000/userProfilePhotoUpdate?email=${user?.email}`,
                 {
@@ -98,7 +133,7 @@ const DisplayProfilePicture = () => {
                     "content-type": "application/json",
                     authorization: `Bearer ${localStorage.getItem("weShare")}`,
                   },
-                  body: JSON.stringify(profilePictureUrl),
+                  body: JSON.stringify(newPost),
                 }
               )
                 .then((res) => res.json())

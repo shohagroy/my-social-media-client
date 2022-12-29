@@ -95,7 +95,14 @@ const FeedsCard = ({ post, postId, comments }) => {
             <div className="-space-y-1 m-1">
               <Link>
                 <h2 className="font-semibold text-xl leading-none">
-                  {postAuthor.name}
+                  {postAuthor.name}{" "}
+                  <span
+                    className={`text-md font-normal  text-gray-500 ${
+                      !post.isProfilePicture && "hidden"
+                    }`}
+                  >
+                    updated his profile picture {postTime}
+                  </span>
                 </h2>
               </Link>
               <span className="inline-block  leading-none text-gray-400">

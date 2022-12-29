@@ -40,25 +40,25 @@ const InputBasicInfo = () => {
                 date,
                 react: [
                   {
-                    _id: 0,
+                    _id: 1,
                     name: "like",
                     emoji: "https://i.ibb.co/7J4wZXV/like.gif",
                     user: [],
                   },
                   {
-                    _id: 1,
+                    _id: 2,
                     name: "love",
                     emoji: "https://i.ibb.co/KxcYzBQ/love.gif",
                     user: [],
                   },
                   {
-                    _id: 2,
+                    _id: 3,
                     name: "haha",
                     emoji: "https://i.ibb.co/hYW2t8F/haha.gif",
                     user: [],
                   },
                   {
-                    _id: 3,
+                    _id: 4,
                     name: "sad",
                     emoji: "https://i.ibb.co/8rw0Y4x/sad.gif",
                     user: [],
