@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 
-const UpdateCollege = () => {
+const UpdateDateofBirth = () => {
   const { user } = useContext(AuthContex);
   const [viewProfile, setViewProfile] = useState({});
   const [openModal, setOpenModal] = useState(false);
@@ -18,26 +18,28 @@ const UpdateCollege = () => {
       .then((res) => res.json())
       .then((data) => {
         setViewProfile(data);
+        console.log(data);
         setLoading(false);
       });
   }, [modalLoading, user]);
 
-  const updateCollegeNameHandelar = (e) => {
+  const updateBirthDayHandelar = (e) => {
     e.preventDefault();
     setModalLoading(true);
 
-    const collegeName = e.target.collegeName.value;
-    const address = e.target.address.value;
+    const birthDay = e.target.birthDay.value;
+    const gender = e.target.gender.value;
 
-    const updateCollege = { name: collegeName, address };
+    const birthGender = { birthDay, gender };
+    console.log(birthGender);
 
-    fetch(`http://localhost:5000/findUserCollege?email=${user.email}`, {
+    fetch(`http://localhost:5000/findUserBirthDayGenger?email=${user.email}`, {
       method: "PUT",
       headers: {
         "content-type": "application/json",
         authorization: `Bearer ${localStorage.getItem("weShare")}`,
       },
-      body: JSON.stringify(updateCollege),
+      body: JSON.stringify(birthGender),
     })
       .then((res) => res.json())
       .then((data) => {
@@ -63,7 +65,7 @@ const UpdateCollege = () => {
     <div className="my-4">
       <div className="flex justify-between items-center">
         <p className="text-xl font-semibold">
-          <i className="fa-solid fa-graduation-cap my-3"></i> Your college
+          <i class="fa-solid fa-calendar-days my-3"></i> Date of Birth or Gender
         </p>
         <button
           onClick={() => setOpenModal(!openModal)}
@@ -71,7 +73,7 @@ const UpdateCollege = () => {
         >
           {" "}
           <i className="fa-sharp border border-blue-500 rounded-full p-1  mr-2 fa-solid fa-plus"></i>
-          <span>Add College </span>
+          <span>Update Date of Birth or Gender</span>
         </button>
       </div>
       <div className="text-xl font-semibold text-gray-500">
@@ -86,24 +88,29 @@ const UpdateCollege = () => {
           </div>
         ) : (
           <div>
-            {viewProfile?.college?.name ? (
+            {viewProfile?.birthday?.date ? (
               <div>
                 <p>
-                  College Name:{" "}
+                  <i class="fa-solid fa-calendar-days mr-3"></i>
                   <span className="font-bold text-black">
-                    {viewProfile?.college?.name}
+                    {viewProfile?.birthday?.date}
                   </span>
                 </p>
                 <p>
-                  Address:{" "}
-                  <span className="font-bold text-black">
-                    {viewProfile?.college?.address}
+                  {viewProfile.gender === "male" ? (
+                    <i class="fa-solid text-2xl fa-person mr-3"></i>
+                  ) : (
+                    <i class="fa-solid fa-person-dress mr-3"></i>
+                  )}
+
+                  <span className="font-bold capitalize text-black">
+                    {viewProfile?.gender}
                   </span>
                 </p>
               </div>
             ) : (
               <div className="flex text-black font-bold text-2xl justify-center items-center py-12">
-                <h2>Please Add Your College!</h2>
+                <h2>Please Add Your School!</h2>
               </div>
             )}
           </div>
@@ -116,7 +123,7 @@ const UpdateCollege = () => {
         <div className="absolute md:top-[480px] flex justify-center items-center top-0  h-full left-0 w-full">
           <div className="flex justify-center items-center">
             <form
-              onSubmit={(e) => updateCollegeNameHandelar(e)}
+              onSubmit={(e) => updateBirthDayHandelar(e)}
               action=""
               className="border p-8 bg-white rounded-xl shadow-lg text-center w-full "
             >
@@ -131,24 +138,26 @@ const UpdateCollege = () => {
                     </p>
                   </div>
                   <p className=" font-semibold text-2xl my-3">
-                    Your College Name
+                    Date of Birth or Gender
                   </p>
                   <input
-                    type="text"
-                    placeholder="College Name"
-                    name="collegeName"
+                    type="date"
+                    placeholder="School Name"
+                    name="birthDay"
                     required
                     className="border p-3 w-full rounded-md"
                   />
-                  <input
-                    type="text"
-                    placeholder="Address"
-                    required
-                    name="address"
+                  <select
                     className="border p-3 w-full my-3 rounded-md"
-                  />
+                    name="gender"
+                    id=""
+                  >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                  </select>
+
                   <button className="w-full py-3 rounded-md font-semibold hover:text-white bg-blue-200 hover:bg-blue-500">
-                    Add College
+                    Update Birth Day & Gender
                   </button>
                 </div>
               ) : (
@@ -169,4 +178,4 @@ const UpdateCollege = () => {
   );
 };
 
-export default UpdateCollege;
+export default UpdateDateofBirth;

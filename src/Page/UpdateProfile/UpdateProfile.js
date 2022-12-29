@@ -2,7 +2,11 @@ import React from "react";
 import DisplayProfilePicture from "../../Shared/DisplayProfilePicture/DisplayProfilePicture";
 import Navigation from "../../Shared/Header/Navigation";
 import UpdateCollege from "./UpdateCollege";
+import UpdateDateofBirth from "./UpdateDateofBirth";
+import UpdateLiveninCity from "./UpdateLiveinCity";
+import UpdateMobile from "./UpdateMobile";
 import UpdateSchool from "./UpdateSchool";
+import UpdateWork from "./UpdateWork";
 
 const UpdateProfile = () => {
   return (
@@ -16,6 +20,10 @@ const UpdateProfile = () => {
             <h2 className="font-semibold text-2xl">Update Profile</h2>
             <UpdateSchool />
             <UpdateCollege />
+            <UpdateWork />
+            <UpdateLiveninCity />
+            <UpdateMobile />
+            <UpdateDateofBirth />
           </div>
         </div>
       </div>

@@ -18,12 +18,9 @@ const UpdateSchool = () => {
       .then((res) => res.json())
       .then((data) => {
         setViewProfile(data);
-        console.log(data);
         setLoading(false);
       });
   }, [modalLoading, user]);
-
-  console.log(loading, viewProfile);
 
   const updateSchoolNameHandelar = (e) => {
     e.preventDefault();
@@ -61,7 +58,6 @@ const UpdateSchool = () => {
       </div>
     );
   }
-  // console.log(viewProfile.school.name);
 
   return (
     <div className="my-4">
@@ -90,25 +86,34 @@ const UpdateSchool = () => {
           </div>
         ) : (
           <div>
-            <p>
-              School Name:{" "}
-              <span className="font-bold">{viewProfile?.school?.name}</span>
-            </p>
-            <p>
-              Achool Address:{" "}
-              <span className="font-bold">{viewProfile?.school?.address}</span>
-            </p>
+            {viewProfile?.school?.name ? (
+              <div>
+                <p>
+                  School Name:{" "}
+                  <span className="font-bold text-black">
+                    {viewProfile?.school?.name}
+                  </span>
+                </p>
+                <p>
+                  Address:{" "}
+                  <span className="font-bold text-black">
+                    {viewProfile?.school?.address}
+                  </span>
+                </p>
+              </div>
+            ) : (
+              <div className="flex text-black font-bold text-2xl justify-center items-center py-12">
+                <h2>Please Add Your School!</h2>
+              </div>
+            )}
           </div>
         )}
-        {/* {loading === false && (
-          
-        )} */}
       </div>
 
       <hr className="my-2" />
 
       {openModal && (
-        <div className="absolute flex justify-center items-center top-0 bg-white/80 h-full left-0 w-full">
+        <div className="absolute md:top-[480px] flex justify-center items-center top-0  h-full left-0 w-full">
           <div className="flex justify-center items-center">
             <form
               onSubmit={(e) => updateSchoolNameHandelar(e)}
