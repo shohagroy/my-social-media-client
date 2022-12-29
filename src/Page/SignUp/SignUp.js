@@ -40,14 +40,15 @@ const SignUp = () => {
           name: data.name,
           email: data.email,
           photoUrl: "",
-          school: [],
-          college: [],
-          work: [],
-          bio: [],
-          livein: [],
-          mobile: [],
-          gender: [],
-          birthday: [],
+          coverPhoto: "",
+          school: {},
+          college: {},
+          work: {},
+          bio: {},
+          livein: {},
+          mobile: {},
+          gender: {},
+          birthday: {},
         };
 
         updateUser(null, data.name)

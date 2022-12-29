@@ -8,9 +8,6 @@ const DisplayComments = ({ comment: newComment, postId, comments }) => {
   const toDay = new Date().toLocaleString();
 
   const { commentDate, comment, email, user: commentUser } = newComment;
-  console.log(comment);
-
-  console.log(email);
 
   useState(() => {
     fetch(

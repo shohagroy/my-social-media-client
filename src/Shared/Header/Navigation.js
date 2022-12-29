@@ -76,7 +76,7 @@ const Navigation = () => {
           </button>
 
           {openProfile && (
-            <div className="w-[350px] absolute right-0 top-[100%]  bg-white p-3 rounded-xl shadow-2xl">
+            <div className="w-[350px] z-50 absolute right-0 top-[100%]  bg-white p-3 rounded-xl shadow-2xl">
               <div
                 onClick={() => setOpenProfile(!openProfile)}
                 className="py-5 hover:bg-gray-100 duration-300 rounded-lg bg-white flex shadow-lg justify-center items-center"
