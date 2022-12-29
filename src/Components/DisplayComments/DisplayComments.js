@@ -8,6 +8,10 @@ const DisplayComments = ({ comment: newComment, postId, comments }) => {
   const toDay = new Date().toLocaleString();
 
   const { commentDate, comment, email, user: commentUser } = newComment;
+  console.log(comment);
+
+  console.log(email);
+
   useState(() => {
     fetch(
       `http://localhost:5000/commentUsers?email=${user.email}&authorEmail=${email}`,
@@ -20,6 +24,7 @@ const DisplayComments = ({ comment: newComment, postId, comments }) => {
       .then((res) => res.json())
       .then((data) => {
         setCommentAuthor(data);
+        console.log(data);
       });
   }, []);
   let postTime;
@@ -48,8 +53,8 @@ const DisplayComments = ({ comment: newComment, postId, comments }) => {
 
   return (
     <div>
-      {postId === comment.postId && (
-        <div className="flex justify-center items-center mx-4">
+      {postId === newComment.postId && (
+        <div className="flex justify-center items-start mx-4">
           <img
             alt={commentUser}
             title={commentUser}

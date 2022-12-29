@@ -105,7 +105,10 @@ const Navigation = () => {
                 className="my-5 text-xl"
               >
                 <div className="p-3 hover:bg-gray-100 duration-300 rounded-lg bg-  flex items-center">
-                  <Link className="flex justify-between items-center w-full">
+                  <Link
+                    to="update-profile"
+                    className="flex justify-between items-center w-full"
+                  >
                     <p className="">
                       <i className="fa-solid p-2 rounded-full bg-gray-200 mr-2 fa-user"></i>
                       <span>Update Profile</span>

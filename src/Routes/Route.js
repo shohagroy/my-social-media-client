@@ -5,6 +5,7 @@ import Feed from "../Page/Home/Feed";
 import InputBasicInfo from "../Page/InputBasicInfo/InputBasicInfo";
 import Login from "../Page/Login/Login";
 import SignUp from "../Page/SignUp/SignUp";
+import UpdateProfile from "../Page/UpdateProfile/UpdateProfile";
 import PrivatePouter from "./PrivatePouter";
 
 export const router = createBrowserRouter([
@@ -25,6 +26,14 @@ export const router = createBrowserRouter([
   {
     path: "/signup",
     element: <SignUp />,
+  },
+  {
+    path: "/update-profile",
+    element: (
+      <PrivatePouter>
+        <UpdateProfile />
+      </PrivatePouter>
+    ),
   },
   {
     path: "/profilePictureCreate",
