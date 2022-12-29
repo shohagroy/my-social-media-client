@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 
 const UpdateMobile = () => {
-  const { user } = useContext(AuthContex);
+  const { user, logOut } = useContext(AuthContex);
   const [viewProfile, setViewProfile] = useState({});
   const [openModal, setOpenModal] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
@@ -38,7 +38,12 @@ const UpdateMobile = () => {
       },
       body: JSON.stringify(updateMobile),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.massahe) {
+          return logOut();
+        }
+        return res.json();
+      })
       .then((data) => {
         setModalLoading(false);
         setOpenModal(!openModal);
@@ -130,6 +135,7 @@ const UpdateMobile = () => {
                     type="text"
                     placeholder="Mobile Number"
                     name="mobile"
+                    defaultValue={viewProfile?.mobile.number}
                     required
                     className="border my-3 p-3 w-full rounded-md"
                   />

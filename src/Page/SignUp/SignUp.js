@@ -13,7 +13,8 @@ const SignUp = () => {
   const [loading, setLoading] = useState(false);
   const [viewPassword, setViewPassword] = useState(false);
 
-  const { googleSignIn } = useContext(AuthContex);
+  const { googleSignIn, updateDisplayName, createUser } =
+    useContext(AuthContex);
   const {
     register,
     handleSubmit,
@@ -26,8 +27,6 @@ const SignUp = () => {
   if (saveUser) {
     navigate(path, { location: true });
   }
-
-  const { createUser, updateUser } = useContext(AuthContex);
 
   const handelSignUp = (data) => {
     setLoading(true);
@@ -51,7 +50,7 @@ const SignUp = () => {
           birthday: {},
         };
 
-        updateUser(null, data.name)
+        updateDisplayName(data.name)
           .then(() => {
             // update user name
             const userEmail = { email: user.email };

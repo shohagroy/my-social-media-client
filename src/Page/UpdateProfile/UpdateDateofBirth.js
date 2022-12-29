@@ -18,7 +18,6 @@ const UpdateDateofBirth = () => {
       .then((res) => res.json())
       .then((data) => {
         setViewProfile(data);
-        console.log(data);
         setLoading(false);
       });
   }, [modalLoading, user]);
@@ -31,7 +30,6 @@ const UpdateDateofBirth = () => {
     const gender = e.target.gender.value;
 
     const birthGender = { birthDay, gender };
-    console.log(birthGender);
 
     fetch(`http://localhost:5000/findUserBirthDayGenger?email=${user.email}`, {
       method: "PUT",
@@ -142,7 +140,7 @@ const UpdateDateofBirth = () => {
                   </p>
                   <input
                     type="date"
-                    placeholder="School Name"
+                    defaultValue={viewProfile?.birthday?.date}
                     name="birthDay"
                     required
                     className="border p-3 w-full rounded-md"

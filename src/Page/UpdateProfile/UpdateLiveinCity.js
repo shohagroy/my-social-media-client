@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 
 const UpdateLiveninCity = () => {
-  const { user } = useContext(AuthContex);
+  const { user, logOut } = useContext(AuthContex);
   const [viewProfile, setViewProfile] = useState({});
   const [openModal, setOpenModal] = useState(false);
   const [modalLoading, setModalLoading] = useState(false);
@@ -15,7 +15,12 @@ const UpdateLiveninCity = () => {
         authorization: `Bearer ${localStorage.getItem("weShare")}`,
       },
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (res.massage) {
+          return logOut();
+        }
+        return res.json();
+      })
       .then((data) => {
         setViewProfile(data);
         setLoading(false);
@@ -138,6 +143,7 @@ const UpdateLiveninCity = () => {
                     type="text"
                     placeholder="Your City Name"
                     name="liveinCity"
+                    defaultValue={viewProfile?.livein.liveinCity}
                     required
                     className="border p-3 w-full rounded-md"
                   />
@@ -146,6 +152,7 @@ const UpdateLiveninCity = () => {
                     placeholder="Your State Name"
                     required
                     name="liveinState"
+                    defaultValue={viewProfile?.livein.liveinState}
                     className="border p-3 w-full my-3 rounded-md"
                   />
                   <button className="w-full py-3 rounded-md font-semibold hover:text-white bg-blue-200 hover:bg-blue-500">

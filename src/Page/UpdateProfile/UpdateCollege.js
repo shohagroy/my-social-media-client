@@ -137,12 +137,14 @@ const UpdateCollege = () => {
                     type="text"
                     placeholder="College Name"
                     name="collegeName"
+                    defaultValue={viewProfile?.college.name}
                     required
                     className="border p-3 w-full rounded-md"
                   />
                   <input
                     type="text"
                     placeholder="Address"
+                    defaultValue={viewProfile?.college.address}
                     required
                     name="address"
                     className="border p-3 w-full my-3 rounded-md"

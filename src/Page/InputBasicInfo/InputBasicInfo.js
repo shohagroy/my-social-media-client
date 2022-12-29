@@ -3,10 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 import Navigation from "../../Shared/Header/Navigation";
 import thankyou from "../../Assets/thankyou.gif";
-import axios from "axios";
 
 const InputBasicInfo = () => {
-  const { updateUser, user } = useContext(AuthContex);
+  const { updateProfilePicture, user } = useContext(AuthContex);
   const imgbbHostKey = process.env.REACT_APP_imgbb_host_key;
   const [loading, setLoading] = useState(false);
   const navigation = useNavigate();
@@ -31,7 +30,7 @@ const InputBasicInfo = () => {
       .then((res) => res.json())
       .then((imgData) => {
         if (imgData.success) {
-          updateUser(imgData.data.url)
+          updateProfilePicture(imgData.data.url)
             .then(() => {
               const newPost = {
                 user: user.email,

@@ -135,12 +135,14 @@ const UpdateWork = () => {
                     type="text"
                     placeholder="Work Name"
                     name="workName"
+                    defaultValue={viewProfile?.work.name}
                     required
                     className="border p-3 w-full rounded-md"
                   />
                   <input
                     type="text"
                     placeholder="Address"
+                    defaultValue={viewProfile?.work.address}
                     required
                     name="address"
                     className="border p-3 w-full my-3 rounded-md"

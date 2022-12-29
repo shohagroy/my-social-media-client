@@ -25,18 +25,16 @@ const GobalAuthProvaider = ({ children }) => {
   };
 
   // update user profile
-  const updateUser = (photoUrl, name) => {
-    if (photoUrl) {
-      return updateProfile(auth.currentUser, {
-        photoURL: photoUrl,
-      });
-    }
-
-    if (name) {
-      return updateProfile(auth.currentUser, {
-        displayName: name,
-      });
-    }
+  const updateDisplayName = (photoUrl, name) => {
+    return updateProfile(auth.currentUser, {
+      displayName: name,
+    });
+  };
+  // update user profile profile
+  const updateProfilePicture = (photoUrl) => {
+    return updateProfile(auth.currentUser, {
+      photoURL: photoUrl,
+    });
   };
 
   // user log Out function
@@ -82,7 +80,8 @@ const GobalAuthProvaider = ({ children }) => {
     logOut,
     loader,
     createUser,
-    updateUser,
+    updateDisplayName,
+    updateProfilePicture,
     login,
     googleSignIn,
   };
