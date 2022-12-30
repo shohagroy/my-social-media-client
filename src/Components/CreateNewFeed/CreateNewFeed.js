@@ -157,6 +157,7 @@ const CreateNewFeed = () => {
             />
             <div className=" w-full">
               <InputEmoji
+                className="z-50"
                 value={emoji}
                 cleanOnEnter
                 onChange={setEmoji}
@@ -169,7 +170,7 @@ const CreateNewFeed = () => {
           <div className="flex justify-between px-6  items-center w-full">
             <p
               onClick={() => setPostToggle(!postToggle)}
-              className="text-2xl cursor-pointer"
+              className="text-2xl text-gray-600 hover:text-gray-800 cursor-pointer"
             >
               <i className="fa-solid fa-image"></i> <span>Add Photos</span>
             </p>

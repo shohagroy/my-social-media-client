@@ -46,7 +46,7 @@ const SignUp = () => {
           bio: {},
           livein: {},
           mobile: {},
-          gender: {},
+          gender: "",
           birthday: {},
         };
 

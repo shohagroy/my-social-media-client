@@ -1,6 +1,5 @@
 import React from "react";
 import DisplayProfilePicture from "../../Shared/DisplayProfilePicture/DisplayProfilePicture";
-import Navigation from "../../Shared/Header/Navigation";
 import UpdateCollege from "./UpdateCollege";
 import UpdateDateofBirth from "./UpdateDateofBirth";
 import UpdateLiveninCity from "./UpdateLiveinCity";
@@ -11,7 +10,6 @@ import UpdateWork from "./UpdateWork";
 const UpdateProfile = () => {
   return (
     <section className="">
-      <Navigation />
       <div className="max-w-[1200px] border mx-auto">
         <DisplayProfilePicture />
 

@@ -21,7 +21,6 @@ const DisplayComments = ({ comment: newComment, postId, comments }) => {
       .then((res) => res.json())
       .then((data) => {
         setCommentAuthor(data);
-        console.log(data);
       });
   }, []);
   let postTime;
@@ -60,7 +59,8 @@ const DisplayComments = ({ comment: newComment, postId, comments }) => {
           />
           <div className=" w-full">
             <p className="bg-gray-100 w-full p-3 text-xl focus:outline-none rounded-xl">
-              {comment}
+              <span className="block">{commentAuthor.name}</span>
+              <span className="text-gray-500 text-normal">{comment}</span>
             </p>
             <p className="text-right text-gray-600">
               <small>{postTime}</small>

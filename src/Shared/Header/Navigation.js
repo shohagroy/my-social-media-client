@@ -46,11 +46,18 @@ const Navigation = () => {
 
       <div className="flex w-[300px] justify-end">
         <div className="text-3xl flex relative">
+          <div className="w-14 h-14  bg-gray-200 mr-3 rounded-full flex justify-center items-center">
+            <Link to="/">
+              <i class="fa-solid fa-house-chimney"></i>
+            </Link>
+          </div>
+
           <div className="w-14 h-14  bg-gray-200 rounded-full flex justify-center items-center">
             <Link>
               <i className="fa-brands fa-facebook-messenger"></i>
             </Link>
           </div>
+
           <div className="w-14 h-14  bg-gray-200 rounded-full flex justify-center items-center mx-3">
             <Link>
               <i className="fa-solid fa-bell"></i>
@@ -106,7 +113,7 @@ const Navigation = () => {
               >
                 <div className="p-3 hover:bg-gray-100 duration-300 rounded-lg bg-  flex items-center">
                   <Link
-                    to="update-profile"
+                    to="/profile/update"
                     className="flex justify-between items-center w-full"
                   >
                     <p className="">

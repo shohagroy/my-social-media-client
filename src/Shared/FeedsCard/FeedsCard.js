@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { useQuery } from "react-query";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 import LikeCommentFunction from "./LikeCommentFunction";
 import InputEmoji from "react-input-emoji";
@@ -14,6 +14,9 @@ const FeedsCard = ({ post, postId, comments }) => {
   const [newComment, setNewComment] = useState("");
   const [postComments, setPostComments] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [sliceData, setSliceData] = useState(200);
+
+  const location = useLocation();
 
   useEffect(() => {
     fetch(
@@ -85,7 +88,7 @@ const FeedsCard = ({ post, postId, comments }) => {
       <div className="rounded-md shadow-md  bg-white border text-gray-800">
         <div className="flex items-center justify-between p-3">
           <div className="flex items-center space-x-2">
-            <Link>
+            <Link to={`/profile/view?id=${postAuthor._id}`}>
               <img
                 alt=""
                 src={postAuthor.photoUrl}
@@ -93,18 +96,16 @@ const FeedsCard = ({ post, postId, comments }) => {
               />
             </Link>
             <div className="-space-y-1 m-1">
-              <Link>
-                <h2 className="font-semibold text-xl leading-none">
-                  {postAuthor.name}{" "}
-                  <span
-                    className={`text-md font-normal  text-gray-500 ${
-                      !post.isProfilePicture && "hidden"
-                    }`}
-                  >
-                    updated his profile picture {postTime}
-                  </span>
-                </h2>
-              </Link>
+              <h2 className="font-semibold text-xl leading-none">
+                <Link>{postAuthor.name} </Link>
+                <span
+                  className={`text-md font-normal  text-gray-500 ${
+                    !post.isProfilePicture && "hidden"
+                  }`}
+                >
+                  updated his profile picture {postTime}
+                </span>
+              </h2>
               <span className="inline-block  leading-none text-gray-400">
                 <i title="Public" className="fa-solid fa-earth-americas"></i>{" "}
                 <span>{postTime}</span>
@@ -127,20 +128,28 @@ const FeedsCard = ({ post, postId, comments }) => {
         <div className="px-4 pb-2 text-xl">
           {post.text && (
             <p>
-              {post.text.slice(0, 200)}{" "}
+              {post.text.slice(0, sliceData)}{" "}
               {post.text.length > 200 && (
-                <Link className="text-blue-600"> ... Read More</Link>
+                <Link
+                  onClick={() => setSliceData(post.text.length)}
+                  className="text-blue-600"
+                >
+                  {" "}
+                  ... Read More
+                </Link>
               )}
             </p>
           )}
         </div>
 
         {post.image && (
-          <img
-            src={post.image}
-            alt=""
-            className="object-cover object-center md:object-contain  w-full bg-gradient-to-r from-blue-200 via-red-500 to-blue-200 md:max-h-[600px]  bg-gray-500"
-          />
+          <Link to={`/profile/viewfullpost?id=${post._id}`}>
+            <img
+              src={post.image}
+              alt=""
+              className="object-cover object-center md:object-contain  w-full bg-gradient-to-r from-blue-200 via-red-500 to-blue-200 md:max-h-[600px]  bg-gray-500"
+            />
+          </Link>
         )}
         <div className="flex justify-between items-center p-3">
           <div className="flex items-center">
@@ -158,7 +167,7 @@ const FeedsCard = ({ post, postId, comments }) => {
                 </div>
 
                 <div>
-                  <p className={`${reactCount == 0 ? "hidden" : "block"}`}>
+                  <p className={`${reactCount === 0 ? "hidden" : "block"}`}>
                     {reactCount}
                   </p>
                 </div>
@@ -166,7 +175,7 @@ const FeedsCard = ({ post, postId, comments }) => {
             </div>
           </div>
           <div>
-            <p className={`${post.totalComments == 0 ? "hidden" : "block"}`}>
+            <p className={`${post.totalComments === 0 ? "hidden" : "block"}`}>
               {post.totalComments} Comments
             </p>
           </div>
@@ -200,7 +209,7 @@ const FeedsCard = ({ post, postId, comments }) => {
                 </div>
               </div>
             )}
-            {comments.map((comment) => (
+            {comments.slice(0, 2).map((comment) => (
               <DisplayComments
                 postId={postId}
                 comment={comment}

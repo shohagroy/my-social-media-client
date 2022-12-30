@@ -12,10 +12,15 @@ const DisplayProfilePicture = () => {
 
   const imgbbHostKey = process.env.REACT_APP_imgbb_host_key;
 
+  const params = new Proxy(new URLSearchParams(window.location.search), {
+    get: (searchParams, prop) => searchParams.get(prop),
+  });
+  const profileId = params.id;
+
   useEffect(() => {
     setLoading(true);
     setCoverPhotoFatching(true);
-    fetch(`http://localhost:5000/findUserProfile?email=${user.email}`, {
+    fetch(`http://localhost:5000/findUserProfile?id=${profileId}`, {
       headers: {
         authorization: `Bearer ${localStorage.getItem("weShare")}`,
       },
@@ -170,12 +175,14 @@ const DisplayProfilePicture = () => {
           )}
 
           <div className="absolute bottom-0 right-0 m-10">
-            <button
-              onClick={() => setCoverModal(!coverModal)}
-              className="bg-white hover:bg-gray-200 px-4 py-2 rounded-md font-semibold"
-            >
-              <i className="mr-2 fa-solid fa-camera"></i>Edit Cover Photo
-            </button>
+            {viewProfile === user.email && (
+              <button
+                onClick={() => setCoverModal(!coverModal)}
+                className="bg-white hover:bg-gray-200 px-4 py-2 rounded-md font-semibold"
+              >
+                <i className="mr-2 fa-solid fa-camera"></i>Edit Cover Photo
+              </button>
+            )}
           </div>
         </div>
         <div className="h-[150px] flex justify-center items-center relative  bg-red-00">
@@ -196,14 +203,16 @@ const DisplayProfilePicture = () => {
                   />
                 )}
 
-                <button
-                  onClick={() => setProfileModal(!profileModal)}
-                  className="absolute bg-gray-50 border border-black hover:bg-gray-200 hover:text-gray-800 text-gray-500 p-3 w-12 text-xl flex justify-center items-center h-12 rounded-full  bottom-0 right-0"
-                >
-                  <i className="fa-solid fa-camera "></i>
-                </button>
+                {viewProfile.email === user.email && (
+                  <button
+                    onClick={() => setProfileModal(!profileModal)}
+                    className="absolute bg-gray-50 border border-black hover:bg-gray-200 hover:text-gray-800 text-gray-500 p-3 w-12 text-xl flex justify-center items-center h-12 rounded-full  bottom-0 right-0"
+                  >
+                    <i className="fa-solid fa-camera "></i>
+                  </button>
+                )}
               </div>
-              <div className="my-14 mx-10">
+              <div className="my-16 mx-10">
                 <h2 className="text-4xl font-bold capitalize ">
                   {viewProfile.name}
                 </h2>
@@ -243,11 +252,19 @@ const DisplayProfilePicture = () => {
               </div>
             </div>
           </div>
-          <div className="w-[250px] text-center mr-12">
-            <button className="px-6 py-2 bg-blue-200 hover:text-white duration-300 hover:bg-blue-400 font-semibold rounded-lg">
-              Update Profile
-            </button>
-          </div>
+          {viewProfile.email === user.email ? (
+            <div className="w-[250px] text-center mr-12">
+              <button className="px-6 py-2 bg-blue-200 hover:text-white duration-300 hover:bg-blue-400 font-semibold rounded-lg">
+                Update Profile
+              </button>
+            </div>
+          ) : (
+            <div className="w-[250px] text-center mr-12">
+              <button className="px-6 py-2 bg-blue-300 hover:text-white duration-300 hover:bg-blue-600 font-semibold rounded-lg">
+                Add Friend
+              </button>
+            </div>
+          )}
         </div>
         <hr />
       </div>

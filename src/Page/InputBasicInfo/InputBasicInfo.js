@@ -97,24 +97,13 @@ const InputBasicInfo = () => {
     <section>
       <Navigation />
 
-      <div className="mt-12 flex flex-col items-center text-2xl font-semibold text-green-500">
-        <h2 className="">
-          Hello "
-          <span className="capitalize text-red-600">{user.displayName}"</span>{" "}
-          Wellcome to WeShare!
-        </h2>
-        <p className="my-1"></p>
-        <p>Please Upload your Profile Picture, to Make Your 1st Post.</p>
-        <img className="text-center w-1/5" src={thankyou} alt="Thank You.." />
-      </div>
-
-      <div className="flex justify-center items-center w-full">
+      <div className="flex flex-col  justify-center items-center h-screen w-full">
+        <p className="my-3 text-2xl font-semibold">
+          Upload Your Profile Pictire
+        </p>
         <form onSubmit={(e) => profilePictureUpdateHandelar(e)}>
           <div className="md:w-[500px] w-[100vw] ">
             <fieldset className="w-full space-y-1 text-gray-900">
-              {/* <label htmlFor="files" className="block text-xl my-2 ">
-                Upload Hare
-              </label> */}
               <div className="flex">
                 <input
                   type="file"

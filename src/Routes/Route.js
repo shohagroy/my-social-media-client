@@ -1,11 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
+import FindFriend from "../Components/FindFriend.js/FindFriend";
 import MainLayout from "../Layout/MainLayout";
+import SecenderyLayout from "../Layout/SecenderyLayout";
 import ErrorPage from "../Page/ErrorPage/ErrorPage";
 import Feed from "../Page/Home/Feed";
 import InputBasicInfo from "../Page/InputBasicInfo/InputBasicInfo";
 import Login from "../Page/Login/Login";
 import SignUp from "../Page/SignUp/SignUp";
 import UpdateProfile from "../Page/UpdateProfile/UpdateProfile";
+import ViewProfile from "../Page/ViewProfile/ViewProfile";
+import ViewDetailsPost from "../Shared/ViewDetailsPost/ViewDetailsPost";
 import PrivatePouter from "./PrivatePouter";
 
 export const router = createBrowserRouter([
@@ -17,7 +21,10 @@ export const router = createBrowserRouter([
       </PrivatePouter>
     ),
     errorElement: <ErrorPage />,
-    children: [{ path: "/", element: <Feed /> }],
+    children: [
+      { path: "/", element: <Feed /> },
+      { path: "/", element: <FindFriend /> },
+    ],
   },
   {
     path: "/login",
@@ -28,13 +35,28 @@ export const router = createBrowserRouter([
     element: <SignUp />,
   },
   {
-    path: "/update-profile",
+    path: "/profile",
     element: (
       <PrivatePouter>
-        <UpdateProfile />
+        <SecenderyLayout />
       </PrivatePouter>
     ),
+    children: [
+      {
+        path: "/profile/update",
+        element: <UpdateProfile />,
+      },
+      {
+        path: "/profile/viewfullpost",
+        element: <ViewDetailsPost />,
+      },
+      {
+        path: "/profile/view",
+        element: <ViewProfile />,
+      },
+    ],
   },
+
   {
     path: "/profilePictureCreate",
     element: (

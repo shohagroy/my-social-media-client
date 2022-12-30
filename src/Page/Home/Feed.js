@@ -39,7 +39,6 @@ const Feed = () => {
   }
 
   const { feeds, comments } = feedsData;
-  console.log(feedsData);
 
   return (
     <section className="mx-2">

@@ -58,6 +58,7 @@ const LikeCommentFunction = ({ reacts, postId, setReactCount }) => {
     )
       .then((res) => res.json())
       .then((data) => {
+        console.log(mySelect);
         setViewEmoji(mySelect.emoji);
       });
   };
@@ -85,7 +86,7 @@ const LikeCommentFunction = ({ reacts, postId, setReactCount }) => {
           Like
         </button>
         {mouseHover && (
-          <div className="absolute flex justify-center items-center rounded-full bg-white p-1 border border-black w-full top-[-60px]">
+          <div className="absolute flex justify-center items-center rounded-full bg-white p-1 border border-black w-full top-[-6vh]">
             {reacts
               .sort((a, b) => (a._id > b._id ? 1 : -1))
               .map((react, i) => (
