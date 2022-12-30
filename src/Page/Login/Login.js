@@ -28,10 +28,11 @@ const Login = () => {
         const user = result.user;
 
         if (user.email) {
-          fetch(`http://localhost:5000/jwtCrateLoginUser?email=${user.email}`)
+          fetch(
+            `https://my-social-media-server.vercel.app/jwtCrateLoginUser?email=${user.email}`
+          )
             .then((res) => res.json())
             .then((data) => {
-              console.log(data);
               if (data.jwtToken) {
                 localStorage.setItem("weShare", data.jwtToken);
                 setLoading(false);

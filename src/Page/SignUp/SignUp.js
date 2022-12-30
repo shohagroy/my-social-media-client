@@ -55,7 +55,7 @@ const SignUp = () => {
             // update user name
             const userEmail = { email: user.email };
             if (userEmail) {
-              fetch(`http://localhost:5000/createUser`, {
+              fetch(`https://my-social-media-server.vercel.app/createUser`, {
                 method: "POST",
                 headers: {
                   "content-type": "application/json",

@@ -1,17 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 
-const LikeCommentFunction = ({ reacts, postId, setReactCount }) => {
-  const { user } = useContext(AuthContex);
-  const [viewEmoji, setViewEmoji] = useState("");
+const LikeCommentFunction = ({ reacts, postId, setReactCount, postAuthor }) => {
+  const { user, setUpdateReact, updateReact, socket } = useContext(AuthContex);
   const [mouseHover, setMonuseHover] = useState(false);
+
+  // useEffect(() => {
+  //   socket?.emit("newUser", user.email);
+  // }, [socket, user.email]);
+
+  // ___________________________________________________________________________
 
   const reactUser = { name: user.displayName, email: user.email };
 
   let displayEmoji;
   let totalCount = 0;
 
-  reacts.map((react, i) => {
+  reacts.map((react) => {
     const reactCount = react?.user.length;
     totalCount = totalCount + reactCount;
 
@@ -25,6 +30,9 @@ const LikeCommentFunction = ({ reacts, postId, setReactCount }) => {
   setReactCount(totalCount);
 
   const reactUpdateHandelar = (mySelect) => {
+    console.log(postId);
+
+    setUpdateReact(!updateReact);
     const reactId = mySelect._id;
     let updatedReact;
     let remainUser;
@@ -46,7 +54,7 @@ const LikeCommentFunction = ({ reacts, postId, setReactCount }) => {
 
     setMonuseHover(false);
     fetch(
-      `http://localhost:5000/setNewReact?email=${user.email}&id=${postId}`,
+      `https://my-social-media-server.vercel.app/setNewReact?email=${user.email}&id=${postId}`,
       {
         method: "PUT",
         headers: {
@@ -58,8 +66,13 @@ const LikeCommentFunction = ({ reacts, postId, setReactCount }) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        console.log(mySelect);
-        setViewEmoji(mySelect.emoji);
+        // socket.emit("sendNotification", {
+        //   senderName: user.displayName,
+        //   senderEmail: user.email,
+        //   receiverName: postAuthor.email,
+        //   postId,
+        //   type: mySelect.name,
+        // });
       });
   };
 

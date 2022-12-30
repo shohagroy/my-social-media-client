@@ -56,14 +56,17 @@ const CreateNewFeed = () => {
         totalReact: 0,
         totalComments: 0,
       };
-      fetch(`http://localhost:5000/createNewPost?userEmail=${user?.email}`, {
-        method: "POST",
-        headers: {
-          "content-type": "application/json",
-          authorization: `Bearer ${localStorage.getItem("weShare")}`,
-        },
-        body: JSON.stringify(newPost),
-      })
+      fetch(
+        `https://my-social-media-server.vercel.app/createNewPost?userEmail=${user?.email}`,
+        {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+            authorization: `Bearer ${localStorage.getItem("weShare")}`,
+          },
+          body: JSON.stringify(newPost),
+        }
+      )
         .then((res) => res.json())
         .then((data) => {
           setLoading(false);
@@ -119,7 +122,7 @@ const CreateNewFeed = () => {
             };
 
             fetch(
-              `http://localhost:5000/createNewPost?userEmail=${user?.email}`,
+              `https://my-social-media-server.vercel.app/createNewPost?userEmail=${user?.email}`,
               {
                 method: "POST",
                 headers: {
@@ -133,10 +136,6 @@ const CreateNewFeed = () => {
               .then((data) => {
                 setLoading(false);
               });
-          }
-
-          if (!postImage) {
-            console.log("only text");
           }
         });
     }

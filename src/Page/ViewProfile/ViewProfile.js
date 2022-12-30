@@ -4,7 +4,7 @@ import DisplayProfilePicture from "../../Shared/DisplayProfilePicture/DisplayPro
 import FeedsCard from "../../Shared/FeedsCard/FeedsCard";
 
 const ViewProfile = () => {
-  const { user } = useContext(AuthContex);
+  const { user, updateReact } = useContext(AuthContex);
   const [loading, setLoading] = useState(false);
   const [userPost, setuserPost] = useState([]);
   const [comments, setComments] = useState([]);
@@ -18,7 +18,7 @@ const ViewProfile = () => {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `http://localhost:5000/profileTramlinefeed?email=${user.email}&id=${userId}`,
+      `https://my-social-media-server.vercel.app/profileTramlinefeed?email=${user.email}&id=${userId}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("weShare")}`,
@@ -32,9 +32,7 @@ const ViewProfile = () => {
         setViewProfile(data.viewUser);
         setLoading(false);
       });
-  }, [user]);
-
-  console.log(viewProfile);
+  }, [user, updateReact]);
 
   return (
     <section className="">

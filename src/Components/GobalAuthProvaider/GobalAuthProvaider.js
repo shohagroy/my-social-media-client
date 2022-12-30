@@ -1,4 +1,5 @@
 import React, { createContext, useEffect, useState } from "react";
+import { io } from "socket.io-client";
 
 import {
   createUserWithEmailAndPassword,
@@ -15,7 +16,8 @@ export const AuthContex = createContext();
 const GobalAuthProvaider = ({ children }) => {
   const [user, setUser] = useState({});
   const [loader, setLoader] = useState(true);
-  const [addCart, setAddCart] = useState(false);
+  const [updateReact, setUpdateReact] = useState(false);
+  const [socket, setSocket] = useState(null);
 
   const auth = getAuth(app);
   // create user function
@@ -69,13 +71,16 @@ const GobalAuthProvaider = ({ children }) => {
       }
       setLoader(false);
     });
-
     return () => unSubscribe();
   }, [user]);
 
+  // useEffect(() => {
+  //   setSocket(io("http://localhost:5001"));
+  // }, []);
+
   const authInfo = {
-    setAddCart,
-    addCart,
+    setUpdateReact,
+    updateReact,
     user,
     logOut,
     loader,
@@ -84,6 +89,7 @@ const GobalAuthProvaider = ({ children }) => {
     updateProfilePicture,
     login,
     googleSignIn,
+    socket,
   };
   return <AuthContex.Provider value={authInfo}>{children}</AuthContex.Provider>;
 };

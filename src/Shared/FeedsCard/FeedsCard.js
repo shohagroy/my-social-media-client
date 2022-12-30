@@ -1,26 +1,22 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useQuery } from "react-query";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 import LikeCommentFunction from "./LikeCommentFunction";
 import InputEmoji from "react-input-emoji";
 import DisplayComments from "../../Components/DisplayComments/DisplayComments";
 
 const FeedsCard = ({ post, postId, comments }) => {
-  const { user } = useContext(AuthContex);
+  const { user, socket } = useContext(AuthContex);
   const toDay = new Date().toLocaleString();
   const [reactCount, setReactCount] = useState(0);
   const [postAuthor, setPostAuthor] = useState({});
   const [newComment, setNewComment] = useState("");
-  const [postComments, setPostComments] = useState([]);
   const [loading, setLoading] = useState(false);
   const [sliceData, setSliceData] = useState(200);
 
-  const location = useLocation();
-
   useEffect(() => {
     fetch(
-      `http://localhost:5000/findUser?email=${user.email}&userEmail=${post.user}`,
+      `https://my-social-media-server.vercel.app/findUser?email=${user.email}&userEmail=${post.user}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("weShare")}`,
@@ -30,6 +26,10 @@ const FeedsCard = ({ post, postId, comments }) => {
       .then((res) => res.json())
       .then((data) => setPostAuthor(data));
   }, []);
+
+  // useEffect(() => {
+  //   socket?.emit("newUser", user.email);
+  // }, [socket, user.email]);
 
   let postTime;
   const currentMilisecend = new Date(toDay).setMilliseconds(52);
@@ -67,7 +67,7 @@ const FeedsCard = ({ post, postId, comments }) => {
     };
 
     fetch(
-      `http://localhost:5000/addNewComment?email=${user.email}&id=${postId}`,
+      `https://my-social-media-server.vercel.app/addNewComment?email=${user.email}&id=${postId}`,
       {
         method: "POST",
         headers: {
@@ -79,6 +79,13 @@ const FeedsCard = ({ post, postId, comments }) => {
     )
       .then((res) => res.json())
       .then((data) => {
+        // socket.emit("sendNotification", {
+        //   senderName: user.displayName,
+        //   senderEmail: user.email,
+        //   receiverName: postAuthor.email,
+        //   postId,
+        //   type: "comment",
+        // });
         setLoading(false);
       });
   };
@@ -97,7 +104,9 @@ const FeedsCard = ({ post, postId, comments }) => {
             </Link>
             <div className="-space-y-1 m-1">
               <h2 className="font-semibold text-xl leading-none">
-                <Link>{postAuthor.name} </Link>
+                <Link to={`/profile/view?id=${postAuthor._id}`}>
+                  {postAuthor.name}{" "}
+                </Link>
                 <span
                   className={`text-md font-normal  text-gray-500 ${
                     !post.isProfilePicture && "hidden"
@@ -185,6 +194,7 @@ const FeedsCard = ({ post, postId, comments }) => {
           setReactCount={setReactCount}
           postId={postId}
           reacts={post.react}
+          postAuthor={postAuthor}
         />
         <hr />
         <div className="p-3">

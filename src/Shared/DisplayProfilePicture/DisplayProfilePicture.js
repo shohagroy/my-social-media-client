@@ -20,11 +20,14 @@ const DisplayProfilePicture = () => {
   useEffect(() => {
     setLoading(true);
     setCoverPhotoFatching(true);
-    fetch(`http://localhost:5000/findUserProfile?id=${profileId}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("weShare")}`,
-      },
-    })
+    fetch(
+      `https://my-social-media-server.vercel.app/findUserProfile?id=${profileId}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("weShare")}`,
+        },
+      }
+    )
       .then((res) => {
         if (res.massahe) {
           return logOut();
@@ -57,7 +60,7 @@ const DisplayProfilePicture = () => {
       .then((res) => res.json())
       .then((imgData) => {
         fetch(
-          `http://localhost:5000/userCoverPhotoUpdate?email=${user.email}`,
+          `https://my-social-media-server.vercel.app/userCoverPhotoUpdate?email=${user.email}`,
           {
             method: "PUT",
             headers: {
@@ -131,7 +134,7 @@ const DisplayProfilePicture = () => {
                 totalComments: 0,
               };
               fetch(
-                `http://localhost:5000/userProfilePhotoUpdate?email=${user?.email}`,
+                `https://my-social-media-server.vercel.app/userProfilePhotoUpdate?email=${user?.email}`,
                 {
                   method: "PUT",
                   headers: {

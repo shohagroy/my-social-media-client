@@ -1,15 +1,27 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 import demoProfile from "../../Assets/demo user.png";
+import NotificationCard from "./NotificationCard";
 
 const Navigation = () => {
-  const { user, logOut } = useContext(AuthContex);
+  const { user, logOut, socket } = useContext(AuthContex);
 
   const [openProfile, setOpenProfile] = useState(false);
+  // const [notifications, setNotifications] = useState([]);
+
+  // useEffect(() => {
+  //   socket?.emit("newUser", user.email);
+  // }, [socket, user.email]);
+
+  // useEffect(() => {
+  //   socket?.on("getNotification", (data) => {
+  //     setNotifications((prev) => [...prev, data]);
+  //   });
+  // }, [socket]);
 
   return (
-    <nav className="px-10 py-2 bg-blue-200 flex justify-between items-center">
+    <nav className="px-10 py-2 relative bg-blue-200 flex justify-between items-center">
       <div className="w-[300px]">
         <Link to="/">
           {/* <img src="" alt="WeShare!" /> */}
@@ -174,6 +186,7 @@ const Navigation = () => {
           )}
         </div>
       </div>
+      {/* <NotificationCard /> */}
     </nav>
   );
 };

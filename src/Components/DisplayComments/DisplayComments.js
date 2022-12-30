@@ -11,7 +11,7 @@ const DisplayComments = ({ comment: newComment, postId, comments }) => {
 
   useState(() => {
     fetch(
-      `http://localhost:5000/commentUsers?email=${user.email}&authorEmail=${email}`,
+      `https://my-social-media-server.vercel.app/commentUsers?email=${user.email}&authorEmail=${email}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("weShare")}`,

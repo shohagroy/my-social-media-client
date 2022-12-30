@@ -10,11 +10,14 @@ const UpdateWork = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:5000/findUserProfile?email=${user.email}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("weShare")}`,
-      },
-    })
+    fetch(
+      `https://my-social-media-server.vercel.app/findUserProfile?email=${user.email}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("weShare")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         setViewProfile(data);
@@ -31,14 +34,17 @@ const UpdateWork = () => {
 
     const updateWork = { name: workName, address };
 
-    fetch(`http://localhost:5000/findUserWork?email=${user.email}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("weShare")}`,
-      },
-      body: JSON.stringify(updateWork),
-    })
+    fetch(
+      `https://my-social-media-server.vercel.app/findUserWork?email=${user.email}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("weShare")}`,
+        },
+        body: JSON.stringify(updateWork),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         setModalLoading(false);

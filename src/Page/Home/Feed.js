@@ -12,7 +12,7 @@ const Feed = () => {
     queryKey: ["feedData"],
     queryFn: async () => {
       const res = await fetch(
-        `http://localhost:5000/allFeedsData?email=${user.email}`,
+        `https://my-social-media-server.vercel.app/allFeedsData?email=${user.email}`,
         {
           headers: {
             authorization: `Bearer ${localStorage.getItem("weShare")}`,

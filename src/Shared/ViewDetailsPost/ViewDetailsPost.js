@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link, Navigate, useLocation, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 // import LikeCommentFunction from "./LikeCommentFunction";
 import InputEmoji from "react-input-emoji";
@@ -7,7 +7,7 @@ import DisplayComments from "../../Components/DisplayComments/DisplayComments";
 import LikeCommentFunction from "../FeedsCard/LikeCommentFunction";
 
 const ViewDetailsPost = () => {
-  const { user } = useContext(AuthContex);
+  const { user, updateReact } = useContext(AuthContex);
   const toDay = new Date().toLocaleString();
   const [reactCount, setReactCount] = useState(0);
   const [post, setPost] = useState({});
@@ -25,7 +25,7 @@ const ViewDetailsPost = () => {
   useEffect(() => {
     // setLoading(true);
     fetch(
-      `http://localhost:5000/viewpostDetails?email=${user.email}&id=${postId}`,
+      `https://my-social-media-server.vercel.app/viewpostDetails?email=${user.email}&id=${postId}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("weShare")}`,
@@ -38,7 +38,7 @@ const ViewDetailsPost = () => {
         setPost(data.postDetails);
         setComments(data.postComments);
       });
-  }, [postId, user, loading]);
+  }, [postId, user, loading, updateReact]);
 
   let postTime;
   const currentMilisecend = new Date(toDay).setMilliseconds(52);
@@ -75,7 +75,7 @@ const ViewDetailsPost = () => {
     };
 
     fetch(
-      `http://localhost:5000/addNewComment?email=${user.email}&id=${postId}`,
+      `https://my-social-media-server.vercel.app/addNewComment?email=${user.email}&id=${postId}`,
       {
         method: "POST",
         headers: {

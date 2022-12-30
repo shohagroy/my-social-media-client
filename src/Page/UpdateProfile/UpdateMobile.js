@@ -10,11 +10,14 @@ const UpdateMobile = () => {
 
   useEffect(() => {
     setLoading(true);
-    fetch(`http://localhost:5000/findUserProfile?email=${user.email}`, {
-      headers: {
-        authorization: `Bearer ${localStorage.getItem("weShare")}`,
-      },
-    })
+    fetch(
+      `https://my-social-media-server.vercel.app/findUserProfile?email=${user.email}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("weShare")}`,
+        },
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         setViewProfile(data);
@@ -30,14 +33,17 @@ const UpdateMobile = () => {
 
     const updateMobile = { number: mobile };
 
-    fetch(`http://localhost:5000/findUserMobile?email=${user.email}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-        authorization: `Bearer ${localStorage.getItem("weShare")}`,
-      },
-      body: JSON.stringify(updateMobile),
-    })
+    fetch(
+      `https://my-social-media-server.vercel.app/findUserMobile?email=${user.email}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+          authorization: `Bearer ${localStorage.getItem("weShare")}`,
+        },
+        body: JSON.stringify(updateMobile),
+      }
+    )
       .then((res) => {
         if (res.massahe) {
           return logOut();

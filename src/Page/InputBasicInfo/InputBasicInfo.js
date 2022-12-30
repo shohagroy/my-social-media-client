@@ -69,7 +69,7 @@ const InputBasicInfo = () => {
               };
 
               fetch(
-                `http://localhost:5000/createNewPost?userEmail=${user?.email}`,
+                `https://my-social-media-server.vercel.app/createNewPost?userEmail=${user?.email}`,
                 {
                   method: "POST",
                   headers: {
