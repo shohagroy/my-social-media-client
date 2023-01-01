@@ -90,27 +90,32 @@ const SignUp = () => {
         const newUser = {
           name: user.displayName,
           email: user.email,
-          role: "customer",
+          photoUrl: "",
+          coverPhoto: "",
+          school: {},
+          college: {},
+          work: {},
+          bio: {},
+          livein: {},
+          mobile: {},
+          gender: "",
+          birthday: {},
         };
 
         if (user) {
-          fetch(
-            `https://mobile-mart-recondition-mobile-shop-server.vercel.app/jwt`,
-            {
-              method: "POST",
-              headers: {
-                "content-type": "application/json",
-              },
-              body: JSON.stringify(newUser),
-            }
-          )
+          fetch(`https://my-social-media-server.vercel.app/createUser`, {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(newUser),
+          })
             .then((res) => res.json())
             .then((data) => {
               setLoading(false);
               if (data.jwtToken) {
-                localStorage.setItem("mobile-mart", data.jwtToken);
+                localStorage.setItem("weShare", data.jwtToken);
                 toast.success("User Create Successfully!");
-                navigate(path, { relative: true });
               }
             });
         }

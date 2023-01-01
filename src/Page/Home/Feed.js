@@ -1,15 +1,16 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import CreateNewFeed from "../../Components/CreateNewFeed/CreateNewFeed";
 import FeedsCard from "../../Shared/FeedsCard/FeedsCard";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 import Skeleton from "../../Shared/Loaders/Skeleton";
+import { Helmet } from "react-helmet";
 
 const Feed = () => {
   // const [feedData, setFeedData] = useState([]);
   const { user, logOut } = useContext(AuthContex);
   const { data: feedsData = [], isLoading } = useQuery({
-    queryKey: ["feedData"],
+    queryKey: ["feedsData"],
     queryFn: async () => {
       const res = await fetch(
         `https://my-social-media-server.vercel.app/allFeedsData?email=${user.email}`,
@@ -42,6 +43,9 @@ const Feed = () => {
 
   return (
     <section className="mx-2">
+      <Helmet>
+        <title>WeShare!</title>
+      </Helmet>
       <div>
         <div>
           <CreateNewFeed />

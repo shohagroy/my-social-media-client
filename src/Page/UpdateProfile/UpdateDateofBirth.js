@@ -11,7 +11,7 @@ const UpdateDateofBirth = () => {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `https://my-social-media-server.vercel.app/findUserProfile?email=${user.email}`,
+      `https://my-social-media-server.vercel.app/viewProfile?email=${user.email}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("weShare")}`,
@@ -69,7 +69,8 @@ const UpdateDateofBirth = () => {
     <div className="my-4">
       <div className="flex justify-between items-center">
         <p className="text-xl font-semibold">
-          <i class="fa-solid fa-calendar-days my-3"></i> Date of Birth or Gender
+          <i className="fa-solid fa-calendar-days my-3"></i> Date of Birth or
+          Gender
         </p>
         <button
           onClick={() => setOpenModal(!openModal)}
@@ -95,16 +96,16 @@ const UpdateDateofBirth = () => {
             {viewProfile?.birthday?.date ? (
               <div>
                 <p>
-                  <i class="fa-solid fa-calendar-days mr-3"></i>
+                  <i className="fa-solid fa-calendar-days mr-3"></i>
                   <span className="font-bold text-black">
                     {viewProfile?.birthday?.date}
                   </span>
                 </p>
                 <p>
                   {viewProfile.gender === "male" ? (
-                    <i class="fa-solid text-2xl fa-person mr-3"></i>
+                    <i className="fa-solid text-2xl fa-person mr-3"></i>
                   ) : (
-                    <i class="fa-solid fa-person-dress mr-3"></i>
+                    <i className="fa-solid fa-person-dress mr-3"></i>
                   )}
 
                   <span className="font-bold capitalize text-black">

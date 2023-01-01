@@ -5,6 +5,7 @@ import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaid
 import InputEmoji from "react-input-emoji";
 import DisplayComments from "../../Components/DisplayComments/DisplayComments";
 import LikeCommentFunction from "../FeedsCard/LikeCommentFunction";
+import LikeComponent from "../FeedsCard/LikeComponent";
 
 const ViewDetailsPost = () => {
   const { user, updateReact } = useContext(AuthContex);
@@ -63,6 +64,28 @@ const ViewDetailsPost = () => {
     postTime = `${parseInt(postMinute / 60 / 24)} day ago.`;
   }
 
+  const likeEmoji = post?.react?.filter((emoji) => emoji.emojiName === "like");
+  const loveEmoji = post?.react?.filter((emoji) => emoji.emojiName === "love");
+  const hahaEmoji = post?.react?.filter((emoji) => emoji.emojiName === "haha");
+  const sadEmoji = post?.react?.filter((emoji) => emoji.emojiName === "sad");
+
+  const totalReact =
+    likeEmoji?.length +
+    loveEmoji?.length +
+    hahaEmoji?.length +
+    sadEmoji?.length;
+  const displayEmoji = [likeEmoji, loveEmoji, hahaEmoji, sadEmoji]
+    .sort(function (a, b) {
+      return b.length - a.length;
+    })
+    .slice(0, 3);
+
+  const displayEmojiLink = displayEmoji?.map((emojidata) => {
+    if (emojidata) {
+      return emojidata[0]?.emojiImage;
+    }
+  });
+
   const addCommentHandelar = () => {
     setLoading(true);
 
@@ -116,7 +139,7 @@ const ViewDetailsPost = () => {
                     to="../../"
                     className="text-5xl text-gray-500 hover:text-gray-900"
                   >
-                    <i class="fa-solid fa-xmark"></i>
+                    <i className="fa-solid fa-xmark"></i>
                   </Link>
                 </div>
               </div>
@@ -171,23 +194,26 @@ const ViewDetailsPost = () => {
                     <div className="flex flex-wrap items-center pt-3 pb-1">
                       <div className="flex items-center space-x-2">
                         <div className="flex -space-x-1">
-                          {post?.react?.slice(0, 3).map((react) => (
-                            <img
-                              key={react._id}
-                              alt=""
-                              className="w-5 h-5 border rounded-full bg-gray-500 border-gray-800"
-                              src={react.emoji}
-                            />
-                          ))}
+                          {displayEmojiLink?.map(
+                            (link, i) =>
+                              link && (
+                                <img
+                                  key=""
+                                  alt=""
+                                  className="w-5 h-5 rounded-full bg-gray-500 border-gray-800"
+                                  src={link}
+                                />
+                              )
+                          )}
                         </div>
 
                         <div>
                           <p
                             className={`${
-                              reactCount === 0 ? "hidden" : "block"
+                              totalReact === 0 ? "hidden" : "block"
                             }`}
                           >
-                            {reactCount}
+                            {totalReact}
                           </p>
                         </div>
                       </div>
@@ -205,11 +231,16 @@ const ViewDetailsPost = () => {
                 </div>
                 <hr />
                 {post.react && (
-                  <LikeCommentFunction
-                    setReactCount={setReactCount}
+                  <LikeComponent
                     postId={postId}
-                    reacts={post.react}
+                    post={post}
+                    postAuthor={postAuthor}
                   />
+                  // <LikeCommentFunction
+                  //   setReactCount={setReactCount}
+                  //   postId={postId}
+                  //   reacts={post.react}
+                  // />
                 )}
 
                 <hr />

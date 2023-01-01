@@ -5,10 +5,6 @@ const LikeCommentFunction = ({ reacts, postId, setReactCount, postAuthor }) => {
   const { user, setUpdateReact, updateReact, socket } = useContext(AuthContex);
   const [mouseHover, setMonuseHover] = useState(false);
 
-  // useEffect(() => {
-  //   socket?.emit("newUser", user.email);
-  // }, [socket, user.email]);
-
   // ___________________________________________________________________________
 
   const reactUser = { name: user.displayName, email: user.email };
@@ -30,8 +26,6 @@ const LikeCommentFunction = ({ reacts, postId, setReactCount, postAuthor }) => {
   setReactCount(totalCount);
 
   const reactUpdateHandelar = (mySelect) => {
-    console.log(postId);
-
     setUpdateReact(!updateReact);
     const reactId = mySelect._id;
     let updatedReact;
@@ -66,13 +60,14 @@ const LikeCommentFunction = ({ reacts, postId, setReactCount, postAuthor }) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        // socket.emit("sendNotification", {
-        //   senderName: user.displayName,
-        //   senderEmail: user.email,
-        //   receiverName: postAuthor.email,
-        //   postId,
-        //   type: mySelect.name,
-        // });
+        socket.emit("sendNotification", {
+          senderName: user.displayName,
+          senderEmail: user.email,
+          receiverName: postAuthor.email,
+          postId,
+          type: mySelect.name,
+          // date: "123",
+        });
       });
   };
 

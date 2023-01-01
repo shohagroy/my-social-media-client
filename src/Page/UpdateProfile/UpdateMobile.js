@@ -11,7 +11,7 @@ const UpdateMobile = () => {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `https://my-social-media-server.vercel.app/findUserProfile?email=${user.email}`,
+      `https://my-social-media-server.vercel.app/viewProfile?email=${user.email}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("weShare")}`,
@@ -73,7 +73,7 @@ const UpdateMobile = () => {
     <div className="my-4">
       <div className="flex justify-between items-center">
         <p className="text-xl font-semibold">
-          <i class="fa-solid fa-phone my-3"></i> Your Mobile/Phone
+          <i className="fa-solid fa-phone my-3"></i> Your Mobile/Phone
         </p>
         <button
           onClick={() => setOpenModal(!openModal)}

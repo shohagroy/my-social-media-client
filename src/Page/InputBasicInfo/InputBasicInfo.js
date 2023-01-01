@@ -2,7 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 import Navigation from "../../Shared/Header/Navigation";
-import thankyou from "../../Assets/thankyou.gif";
+import { Helmet } from "react-helmet";
 
 const InputBasicInfo = () => {
   const { updateProfilePicture, user } = useContext(AuthContex);
@@ -38,32 +38,7 @@ const InputBasicInfo = () => {
                 text: "",
                 image: imgData.data.url,
                 date,
-                react: [
-                  {
-                    _id: 1,
-                    name: "like",
-                    emoji: "https://i.ibb.co/7J4wZXV/like.gif",
-                    user: [],
-                  },
-                  {
-                    _id: 2,
-                    name: "love",
-                    emoji: "https://i.ibb.co/KxcYzBQ/love.gif",
-                    user: [],
-                  },
-                  {
-                    _id: 3,
-                    name: "haha",
-                    emoji: "https://i.ibb.co/hYW2t8F/haha.gif",
-                    user: [],
-                  },
-                  {
-                    _id: 4,
-                    name: "sad",
-                    emoji: "https://i.ibb.co/8rw0Y4x/sad.gif",
-                    user: [],
-                  },
-                ],
+                react: [],
                 totalReact: 0,
                 totalComments: 0,
               };
@@ -95,8 +70,10 @@ const InputBasicInfo = () => {
   };
   return (
     <section>
+      <Helmet>
+        <title>Upload Profile Picture - WeShare!</title>
+      </Helmet>
       <Navigation />
-
       <div className="flex flex-col  justify-center items-center h-screen w-full">
         <p className="my-3 text-2xl font-semibold">
           Upload Your Profile Pictire

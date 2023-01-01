@@ -27,7 +27,7 @@ const GobalAuthProvaider = ({ children }) => {
   };
 
   // update user profile
-  const updateDisplayName = (photoUrl, name) => {
+  const updateDisplayName = (name) => {
     return updateProfile(auth.currentUser, {
       displayName: name,
     });
@@ -78,8 +78,33 @@ const GobalAuthProvaider = ({ children }) => {
   //   setSocket(io("http://localhost:5001"));
   // }, []);
 
+  // useEffect(() => {
+  //   socket?.emit("newUser", user.email);
+  // }, [socket, user.email]);
+
+  // const [notifications, setNotifications] = useState([]);
+
+  // useEffect(() => {
+  //   socket?.on("getNotification", (data) => {
+  //     setNotifications((prev) => [...prev, data]);
+
+  //     fetch(`https://my-social-media-server.vercel.app/addNewComment?email=${user.email}`, {
+  //       method: "POST",
+  //       headers: {
+  //         "content-type": "application/json",
+  //         authorization: `Bearer ${localStorage.getItem("weShare")}`,
+  //       },
+  //       body: JSON.stringify(data),
+  //     })
+  //       .then((res) => res.json())
+  //       .then((data) => {});
+  //   });
+  // }, [socket]);
+  const toDay = new Date().toLocaleString();
+
   const authInfo = {
     setUpdateReact,
+    toDay,
     updateReact,
     user,
     logOut,

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 
 const DisplayProfilePicture = () => {
@@ -17,17 +18,20 @@ const DisplayProfilePicture = () => {
   });
   const profileId = params.id;
 
+  let url = `https://my-social-media-server.vercel.app/viewProfile?email=${user.email}`;
+
+  if (profileId) {
+    url = `https://my-social-media-server.vercel.app/findUserProfile?email=${user.email}&id=${profileId}`;
+  }
+
   useEffect(() => {
     setLoading(true);
     setCoverPhotoFatching(true);
-    fetch(
-      `https://my-social-media-server.vercel.app/findUserProfile?id=${profileId}`,
-      {
-        headers: {
-          authorization: `Bearer ${localStorage.getItem("weShare")}`,
-        },
-      }
-    )
+    fetch(url, {
+      headers: {
+        authorization: `Bearer ${localStorage.getItem("weShare")}`,
+      },
+    })
       .then((res) => {
         if (res.massahe) {
           return logOut();
@@ -173,12 +177,12 @@ const DisplayProfilePicture = () => {
             <img
               src="https://www.79design.org.uk/wp-content/uploads/2021/05/seo-agency-lincolnshire-head-1.jpg"
               alt=""
-              className="object-cover object-center w-full bg-gradient-to-r from-blue-200 via-red-500 to-blue-200 md:max-h-[500px]  bg-gray-500"
+              className="object-cover object-center z-30 w-full bg-gradient-to-r from-blue-200 via-red-500 to-blue-200 md:max-h-[500px]  bg-gray-500"
             />
           )}
 
           <div className="absolute bottom-0 right-0 m-10">
-            {viewProfile === user.email && (
+            {viewProfile.email === user.email && (
               <button
                 onClick={() => setCoverModal(!coverModal)}
                 className="bg-white hover:bg-gray-200 px-4 py-2 rounded-md font-semibold"
@@ -257,9 +261,11 @@ const DisplayProfilePicture = () => {
           </div>
           {viewProfile.email === user.email ? (
             <div className="w-[250px] text-center mr-12">
-              <button className="px-6 py-2 bg-blue-200 hover:text-white duration-300 hover:bg-blue-400 font-semibold rounded-lg">
-                Update Profile
-              </button>
+              <Link to={`/profile/update`}>
+                <button className="px-6 py-2 bg-blue-200 hover:text-white duration-300 hover:bg-blue-400 font-semibold rounded-lg">
+                  Update Profile
+                </button>
+              </Link>
             </div>
           ) : (
             <div className="w-[250px] text-center mr-12">

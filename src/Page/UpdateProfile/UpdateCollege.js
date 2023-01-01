@@ -11,7 +11,7 @@ const UpdateCollege = () => {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `https://my-social-media-server.vercel.app/findUserProfile?email=${user.email}`,
+      `https://my-social-media-server.vercel.app/viewProfile?email=${user.email}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("weShare")}`,

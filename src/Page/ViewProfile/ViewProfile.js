@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 import DisplayProfilePicture from "../../Shared/DisplayProfilePicture/DisplayProfilePicture";
 import FeedsCard from "../../Shared/FeedsCard/FeedsCard";
+import { Helmet } from "react-helmet";
 
 const ViewProfile = () => {
   const { user, updateReact } = useContext(AuthContex);
@@ -36,6 +37,9 @@ const ViewProfile = () => {
 
   return (
     <section className="">
+      <Helmet>
+        <title>View Profile - WeShare!</title>
+      </Helmet>
       <div className="max-w-[1200px] mx-auto">
         <div className="border">
           <DisplayProfilePicture />
@@ -86,7 +90,7 @@ const ViewProfile = () => {
                         <>
                           <div className="flex items-center hover:bg-gray-100 duration-300 text-gray-500 hover:text-gray-800 px-3 ">
                             <p className="text-4xl">
-                              <i class="fa-solid fa-briefcase my-3"></i>
+                              <i className="fa-solid fa-briefcase my-3"></i>
                             </p>
                             <div className="font-semibold ml-4">
                               <p>{viewProfile?.work?.name.slice(0, 30)}</p>
@@ -101,7 +105,7 @@ const ViewProfile = () => {
                         <>
                           <div className="flex items-center hover:bg-gray-100 duration-300 text-gray-500 hover:text-gray-800 px-3 ">
                             <p className="text-4xl">
-                              <i class="fa-solid fa-house-chimney my-3"></i>
+                              <i className="fa-solid fa-house-chimney my-3"></i>
                             </p>
                             <div className="font-semibold ml-4">
                               <p>{viewProfile?.livein?.liveinCity}</p>
@@ -117,7 +121,7 @@ const ViewProfile = () => {
                           {" "}
                           <div className="flex items-center hover:bg-gray-100 duration-300 text-gray-500 hover:text-gray-800 px-3 ">
                             <p className="text-xl">
-                              <i class="fa-solid fa-phone my-3"></i>
+                              <i className="fa-solid fa-phone my-3"></i>
                             </p>
                             <div className="font-semibold ml-4">
                               <p>{viewProfile?.mobile?.number}</p>
@@ -131,7 +135,7 @@ const ViewProfile = () => {
                         <>
                           <div className="flex items-center hover:bg-gray-100 duration-300 text-gray-500 hover:text-gray-800 px-3 ">
                             <p className="text-xl">
-                              <i class="fa-solid fa-calendar-days my-3"></i>
+                              <i className="fa-solid fa-calendar-days my-3"></i>
                             </p>
                             <div className="font-semibold ml-4">
                               <p>{viewProfile?.birthday?.date}</p>
@@ -146,9 +150,9 @@ const ViewProfile = () => {
                           <div className="flex items-center hover:bg-gray-100 duration-300 text-gray-500 hover:text-gray-800 px-3 ">
                             <p className="text-xl">
                               {viewProfile.gender === "male" ? (
-                                <i class="fa-solid text-2xl fa-person mr-3"></i>
+                                <i className="fa-solid text-2xl fa-person mr-3"></i>
                               ) : (
-                                <i class="fa-solid fa-person-dress mr-3"></i>
+                                <i className="fa-solid fa-person-dress mr-3"></i>
                               )}
                             </p>
                             <div className="font-semibold ml-4">

@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import FindFriend from "../Components/FindFriend.js/FindFriend";
 import MainLayout from "../Layout/MainLayout";
 import SecenderyLayout from "../Layout/SecenderyLayout";
+import EmojiUpdate from "../Page/Devoloper/EmojiUpdate/EmojiUpdate";
 import ErrorPage from "../Page/ErrorPage/ErrorPage";
 import Feed from "../Page/Home/Feed";
 import InputBasicInfo from "../Page/InputBasicInfo/InputBasicInfo";
@@ -62,6 +63,14 @@ export const router = createBrowserRouter([
     element: (
       <PrivatePouter>
         <InputBasicInfo />
+      </PrivatePouter>
+    ),
+  },
+  {
+    path: "/developermode",
+    element: (
+      <PrivatePouter>
+        <EmojiUpdate />
       </PrivatePouter>
     ),
   },

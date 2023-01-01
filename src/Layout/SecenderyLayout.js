@@ -5,7 +5,11 @@ import Navigation from "../Shared/Header/Navigation";
 const SecenderyLayout = () => {
   return (
     <section>
-      <Navigation />
+      <div className="relative h-[8vh]  w-full z-50">
+        <div className="fixed  w-full">
+          <Navigation />
+        </div>
+      </div>
       <Outlet />
     </section>
   );

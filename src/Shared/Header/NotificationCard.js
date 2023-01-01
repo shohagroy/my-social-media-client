@@ -1,12 +1,19 @@
 import React from "react";
+import Notification from "./Notification";
 
-const NotificationCard = () => {
+const NotificationCard = ({ notifications }) => {
   return (
-    <section className="absolute bg-red-200 md:w-[420px] h-screen border border-gray-600 p-4 shadow-xl top-[8vh] right-0">
-      <div className="w-full">
-        <h2 className="text-xl font-semibold">All Notification</h2>
+    <div className=" p-4 border-2 rounded-xl border-gray-500 h-full w-full">
+      <h2 className="text-xl p-3 bg-gray-100 mb-1 rounded-t-xl font-semibold text-center">
+        All Notification
+      </h2>
+      <hr />
+      <div className="h-full mt- bg-gray-50">
+        {notifications.map((notification) => (
+          <Notification notification={notification} key={notification._id} />
+        ))}
       </div>
-    </section>
+    </div>
   );
 };
 

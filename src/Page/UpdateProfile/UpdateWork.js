@@ -11,7 +11,7 @@ const UpdateWork = () => {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `https://my-social-media-server.vercel.app/findUserProfile?email=${user.email}`,
+      `https://my-social-media-server.vercel.app/viewProfile?email=${user.email}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("weShare")}`,
@@ -69,7 +69,7 @@ const UpdateWork = () => {
     <div className="my-4">
       <div className="flex justify-between items-center">
         <p className="text-xl font-semibold">
-          <i class="fa-solid fa-briefcase my-3"></i> Your Work
+          <i className="fa-solid fa-briefcase my-3"></i> Your Work
         </p>
         <button
           onClick={() => setOpenModal(!openModal)}

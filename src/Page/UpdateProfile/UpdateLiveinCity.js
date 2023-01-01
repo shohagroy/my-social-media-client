@@ -11,7 +11,7 @@ const UpdateLiveninCity = () => {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `https://my-social-media-server.vercel.app/findUserProfile?email=${user.email}`,
+      `https://my-social-media-server.vercel.app/viewProfile?email=${user.email}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("weShare")}`,
@@ -74,7 +74,7 @@ const UpdateLiveninCity = () => {
     <div className="my-4">
       <div className="flex justify-between items-center">
         <p className="text-xl font-semibold">
-          <i class="fa-solid fa-house-chimney my-3"></i> Your Livein City &
+          <i className="fa-solid fa-house-chimney my-3"></i> Your Livein City &
           State
         </p>
         <button
@@ -98,7 +98,7 @@ const UpdateLiveninCity = () => {
           </div>
         ) : (
           <div>
-            {viewProfile?.livein ? (
+            {viewProfile?.livein?.liveinCity ? (
               <div>
                 <p>
                   Live in City:{" "}

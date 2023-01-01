@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 
-const UpdateSchool = () => {
+const UpdateSchool = ({ setTraimlineId }) => {
   const { user } = useContext(AuthContex);
   const [viewProfile, setViewProfile] = useState({});
   const [openModal, setOpenModal] = useState(false);
@@ -11,7 +11,7 @@ const UpdateSchool = () => {
   useEffect(() => {
     setLoading(true);
     fetch(
-      `https://my-social-media-server.vercel.app/findUserProfile?email=${user.email}`,
+      `https://my-social-media-server.vercel.app/viewProfile?email=${user.email}`,
       {
         headers: {
           authorization: `Bearer ${localStorage.getItem("weShare")}`,
@@ -21,6 +21,7 @@ const UpdateSchool = () => {
       .then((res) => res.json())
       .then((data) => {
         setViewProfile(data);
+        setTraimlineId(data._id);
         setLoading(false);
       });
   }, [modalLoading, user]);

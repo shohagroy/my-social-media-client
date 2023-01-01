@@ -27,32 +27,7 @@ const CreateNewFeed = () => {
         text: emoji,
         image: "",
         date,
-        react: [
-          {
-            _id: 0,
-            name: "like",
-            emoji: "https://i.ibb.co/7J4wZXV/like.gif",
-            user: [],
-          },
-          {
-            _id: 1,
-            name: "love",
-            emoji: "https://i.ibb.co/KxcYzBQ/love.gif",
-            user: [],
-          },
-          {
-            _id: 2,
-            name: "haha",
-            emoji: "https://i.ibb.co/hYW2t8F/haha.gif",
-            user: [],
-          },
-          {
-            _id: 3,
-            name: "sad",
-            emoji: "https://i.ibb.co/8rw0Y4x/sad.gif",
-            user: [],
-          },
-        ],
+        react: [],
         totalReact: 0,
         totalComments: 0,
       };
@@ -91,32 +66,7 @@ const CreateNewFeed = () => {
               text: emoji,
               image: imgData.data.url,
               date,
-              react: [
-                {
-                  _id: 1,
-                  name: "like",
-                  emoji: "https://i.ibb.co/7J4wZXV/like.gif",
-                  user: [],
-                },
-                {
-                  _id: 2,
-                  name: "love",
-                  emoji: "https://i.ibb.co/KxcYzBQ/love.gif",
-                  user: [],
-                },
-                {
-                  _id: 3,
-                  name: "haha",
-                  emoji: "https://i.ibb.co/hYW2t8F/haha.gif",
-                  user: [],
-                },
-                {
-                  _id: 4,
-                  name: "sad",
-                  emoji: "https://i.ibb.co/8rw0Y4x/sad.gif",
-                  user: [],
-                },
-              ],
+              react: [],
               totalReact: 0,
               totalComments: 0,
             };

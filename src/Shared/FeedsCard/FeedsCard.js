@@ -4,11 +4,11 @@ import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaid
 import LikeCommentFunction from "./LikeCommentFunction";
 import InputEmoji from "react-input-emoji";
 import DisplayComments from "../../Components/DisplayComments/DisplayComments";
+import LikeComponent from "./LikeComponent";
 
 const FeedsCard = ({ post, postId, comments }) => {
-  const { user, socket } = useContext(AuthContex);
+  const { user } = useContext(AuthContex);
   const toDay = new Date().toLocaleString();
-  const [reactCount, setReactCount] = useState(0);
   const [postAuthor, setPostAuthor] = useState({});
   const [newComment, setNewComment] = useState("");
   const [loading, setLoading] = useState(false);
@@ -24,12 +24,29 @@ const FeedsCard = ({ post, postId, comments }) => {
       }
     )
       .then((res) => res.json())
-      .then((data) => setPostAuthor(data));
+      .then((data) => {
+        setPostAuthor(data);
+      });
   }, []);
 
-  // useEffect(() => {
-  //   socket?.emit("newUser", user.email);
-  // }, [socket, user.email]);
+  const likeEmoji = post.react.filter((emoji) => emoji.emojiName === "like");
+  const loveEmoji = post.react.filter((emoji) => emoji.emojiName === "love");
+  const hahaEmoji = post.react.filter((emoji) => emoji.emojiName === "haha");
+  const sadEmoji = post.react.filter((emoji) => emoji.emojiName === "sad");
+
+  const totalReact =
+    likeEmoji.length + loveEmoji.length + hahaEmoji.length + sadEmoji.length;
+  const displayEmoji = [likeEmoji, loveEmoji, hahaEmoji, sadEmoji]
+    .sort(function (a, b) {
+      return b.length - a.length;
+    })
+    .slice(0, 3);
+
+  const displayEmojiLink = displayEmoji.map((emojidata) => {
+    if (emojidata) {
+      return emojidata[0]?.emojiImage;
+    }
+  });
 
   let postTime;
   const currentMilisecend = new Date(toDay).setMilliseconds(52);
@@ -79,13 +96,6 @@ const FeedsCard = ({ post, postId, comments }) => {
     )
       .then((res) => res.json())
       .then((data) => {
-        // socket.emit("sendNotification", {
-        //   senderName: user.displayName,
-        //   senderEmail: user.email,
-        //   receiverName: postAuthor.email,
-        //   postId,
-        //   type: "comment",
-        // });
         setLoading(false);
       });
   };
@@ -165,19 +175,22 @@ const FeedsCard = ({ post, postId, comments }) => {
             <div className="flex flex-wrap items-center pt-3 pb-1">
               <div className="flex items-center space-x-2">
                 <div className="flex -space-x-1">
-                  {post.react.slice(0, 3).map((react) => (
-                    <img
-                      key={react._id}
-                      alt=""
-                      className="w-5 h-5 border rounded-full bg-gray-500 border-gray-800"
-                      src={react.emoji}
-                    />
-                  ))}
+                  {displayEmojiLink?.map(
+                    (link, i) =>
+                      link && (
+                        <img
+                          key=""
+                          alt=""
+                          className="w-5 h-5 rounded-full bg-gray-500 border-gray-800"
+                          src={link}
+                        />
+                      )
+                  )}
                 </div>
 
                 <div>
-                  <p className={`${reactCount === 0 ? "hidden" : "block"}`}>
-                    {reactCount}
+                  <p className={`${totalReact === 0 ? "hidden" : "block"}`}>
+                    {totalReact}
                   </p>
                 </div>
               </div>
@@ -190,12 +203,13 @@ const FeedsCard = ({ post, postId, comments }) => {
           </div>
         </div>
         <hr />
-        <LikeCommentFunction
+        {/* <LikeCommentFunction
           setReactCount={setReactCount}
           postId={postId}
           reacts={post.react}
           postAuthor={postAuthor}
-        />
+        /> */}
+        <LikeComponent postId={postId} post={post} postAuthor={postAuthor} />
         <hr />
         <div className="p-3">
           <div className="space-y-3">

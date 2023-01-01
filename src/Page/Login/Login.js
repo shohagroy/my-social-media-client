@@ -136,11 +136,11 @@ const Login = () => {
               >
                 {viewPassword ? (
                   <p>
-                    <i class="fa-solid fa-eye-slash"></i>
+                    <i className="fa-solid fa-eye-slash"></i>
                   </p>
                 ) : (
                   <p>
-                    <i class="fa-solid fa-eye"></i>
+                    <i className="fa-solid fa-eye"></i>
                   </p>
                 )}
               </div>

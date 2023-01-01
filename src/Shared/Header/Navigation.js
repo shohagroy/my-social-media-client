@@ -3,26 +3,51 @@ import { Link } from "react-router-dom";
 import { AuthContex } from "../../Components/GobalAuthProvaider/GobalAuthProvaider";
 import demoProfile from "../../Assets/demo user.png";
 import NotificationCard from "./NotificationCard";
+import MassengerCard from "./MassengerCard";
 
 const Navigation = () => {
-  const { user, logOut, socket } = useContext(AuthContex);
-
+  const { user, logOut } = useContext(AuthContex);
+  const [openNotification, setOpenNotification] = useState(false);
+  const [openMassenger, setOpenMassenger] = useState(false);
   const [openProfile, setOpenProfile] = useState(false);
-  // const [notifications, setNotifications] = useState([]);
+  const [notifications, setNotifications] = useState([]);
+  const [getNotification, setGetNotification] = useState(false);
 
-  // useEffect(() => {
-  //   socket?.emit("newUser", user.email);
-  // }, [socket, user.email]);
+  useEffect(() => {
+    fetch(
+      `https://my-social-media-server.vercel.app/getNotifications?userEmail=${user.email}`,
+      {
+        headers: {
+          authorization: `Bearer ${localStorage.getItem("weShare")}`,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => {
+        setNotifications(data);
+      });
+  }, [user, getNotification]);
 
-  // useEffect(() => {
-  //   socket?.on("getNotification", (data) => {
-  //     setNotifications((prev) => [...prev, data]);
-  //   });
-  // }, [socket]);
+  setInterval(() => {
+    setGetNotification(!getNotification);
+  }, 10000);
+
+  const unseenNotification = notifications.filter(
+    (notification) => notification.isSeen === false
+  );
+
+  const openNotificationHandelar = () => {
+    setOpenMassenger(false);
+    setOpenNotification(!openNotification);
+  };
+  const openMassengerHandelar = () => {
+    setOpenNotification(false);
+    setOpenMassenger(!openMassenger);
+  };
 
   return (
-    <nav className="px-10 py-2 relative bg-blue-200 flex justify-between items-center">
-      <div className="w-[300px]">
+    <nav className="px-10 py-2 z-50 relative bg-blue-200 flex justify-between items-center">
+      <div className="w-[300px] z-50">
         <Link to="/">
           {/* <img src="" alt="WeShare!" /> */}
           <p className="text-4xl font-bold">WeShare!</p>
@@ -56,25 +81,43 @@ const Navigation = () => {
         </fieldset>
       </div>
 
-      <div className="flex w-[300px] justify-end">
+      <div className="flex w-[300px] z-50 justify-end">
         <div className="text-3xl flex relative">
-          <div className="w-14 h-14  bg-gray-200 mr-3 rounded-full flex justify-center items-center">
+          <div className="w-14 h-14 text-gray-400 hover:text-gray-700 bg-gray-100 mr-4 border border-gray-400 hover:border-black duration-300 rounded-full flex justify-center items-center mx-3">
             <Link to="/">
-              <i class="fa-solid fa-house-chimney"></i>
+              <i className="fa-solid fa-house-chimney"></i>
             </Link>
           </div>
 
-          <div className="w-14 h-14  bg-gray-200 rounded-full flex justify-center items-center">
-            <Link>
+          <button
+            onClick={openMassengerHandelar}
+            className="w-14 h-14 text-gray-400 relative hover:text-gray-700 bg-gray-100 mr-4 border border-gray-400 hover:border-black duration-300 rounded-full flex justify-center items-center mx-3"
+          >
+            <p>
               <i className="fa-brands fa-facebook-messenger"></i>
-            </Link>
-          </div>
+            </p>
 
-          <div className="w-14 h-14  bg-gray-200 rounded-full flex justify-center items-center mx-3">
-            <Link>
+            <span className="absolute top-2 right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full">
+              1
+            </span>
+          </button>
+
+          <button
+            onClick={openNotificationHandelar}
+            className="w-14 h-14 relative text-gray-400 hover:text-gray-700 bg-gray-100 mr-4 border border-gray-400 hover:border-black duration-300 rounded-full flex justify-center items-center mx-3"
+          >
+            <p>
               <i className="fa-solid fa-bell"></i>
-            </Link>
-          </div>
+            </p>
+
+            <span
+              className={`${
+                notifications.length ? "absolute" : "hidden"
+              } top-2 right-2 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full`}
+            >
+              {unseenNotification.length}
+            </span>
+          </button>
           <button
             className="text-md"
             onClick={() => setOpenProfile(!openProfile)}
@@ -116,7 +159,9 @@ const Navigation = () => {
                   )}
                 </Link>
 
-                <p className="text-2xl ml-5 font-semibold">Shohag Roy</p>
+                <p className="text-2xl ml-5 font-semibold">
+                  {user.displayName}
+                </p>
               </div>
 
               <div
@@ -185,8 +230,22 @@ const Navigation = () => {
             </div>
           )}
         </div>
+
+        <div
+          className={`absolute  z-50 bg-white  md:w-[420px] duration-300 h-screen p-4 shadow-2xl top-[8vh]  ${
+            openNotification ? "right-0" : "right-[-450px]"
+          } `}
+        >
+          <NotificationCard notifications={notifications} />
+        </div>
+        <div
+          className={`absolute  md:w-[420px] bg-white duration-300 h-screen p-4 shadow-2xl top-[8vh]  ${
+            openMassenger ? "right-0" : "right-[-450px]"
+          }`}
+        >
+          <MassengerCard />
+        </div>
       </div>
-      {/* <NotificationCard /> */}
     </nav>
   );
 };
